@@ -3,279 +3,326 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resumen semanal de Ciber Lunes Junio 2026</title>
+<title>Resumen semanal Ciber Lunes — Junio 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Montserrat',sans-serif;background:#f2f4f8;color:#1a1a2e;margin:0;padding:0;}
+body{font-family:'Montserrat','Segoe UI',sans-serif;background:#eef1f7;color:#1a1a2e;}
 
-.main-header{background:#fff;border-bottom:1px solid #dde3ec;padding:18px 32px 0;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:10px;}
-.main-header-left{}
-.main-title{font-size:17px;font-weight:700;color:#304D85;letter-spacing:.3px;margin-bottom:14px;}
-.tabs{display:flex;gap:0;}
-.tab-btn{padding:11px 28px;font-size:13px;font-weight:600;border:none;cursor:pointer;border-radius:8px 8px 0 0;transition:all .2s;letter-spacing:.3px;border-bottom:2px solid transparent;}
-.tab-btn.jet{background:#e8edf7;color:#304D85;}
-.tab-btn.jet.active{background:#304D85;color:#fff;border-bottom:2px solid #304D85;}
-.tab-btn.jet:not(.active):hover{background:#c5d0e8;color:#304D85;}
-.tab-btn.tv{background:#faeaec;color:#C23543;}
-.tab-btn.tv.active{background:#C23543;color:#fff;border-bottom:2px solid #C23543;}
-.tab-btn.tv:not(.active):hover{background:#f5c8cd;color:#C23543;}
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(48,77,133,.18);}50%{box-shadow:0 0 0 8px rgba(48,77,133,.0);}}
+@keyframes barGrow{from{width:0%;}to{width:var(--bar-w);}}
+@keyframes countUp{from{opacity:0;transform:scale(.85);}to{opacity:1;transform:scale(1);}}
+@keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
+@keyframes popIn{0%{transform:scale(0.7);opacity:0;}70%{transform:scale(1.08);}100%{transform:scale(1);opacity:1;}}
 
-/* NOVEDADES WIDGET */
-.novedades-wrap{margin-bottom:14px;align-self:flex-end;}
-.novedades-toggle{display:inline-flex;align-items:center;gap:7px;padding:7px 15px;border-radius:6px 6px 0 0;border:none;cursor:pointer;font-size:11px;font-weight:600;letter-spacing:.5px;transition:all .15s;font-family:'Montserrat',sans-serif;background:#FFEA92;color:#7a5000;}
-.novedades-toggle:hover{background:#f5d84a;}
-.novedades-toggle .arrow{transition:transform .25s;font-size:12px;}
-.novedades-toggle.open .arrow{transform:rotate(180deg);}
-.novedades-body{display:none;position:absolute;right:32px;top:auto;z-index:100;width:320px;border-radius:0 0 10px 10px;border:1px solid #f5d84a;background:#fffef5;padding:16px 18px;box-shadow:0 4px 18px rgba(0,0,0,.12);}
-.novedades-body.open{display:block;}
-.novedades-body textarea{width:100%;min-height:90px;border:1px solid #e8d97a;border-radius:6px;font-family:'Montserrat',sans-serif;font-size:13px;padding:9px 11px;resize:vertical;outline:none;background:#fffef0;color:#3a2e00;}
-.novedades-body textarea:focus{border-color:#c8a800;}
-.novedades-save{margin-top:9px;padding:7px 18px;border-radius:6px;border:none;font-size:12px;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;background:#c8a800;color:#fff;}
-.novedades-save:hover{background:#a88c00;}
-.novedades-display{margin-top:10px;font-size:13px;color:#5a4200;line-height:1.6;white-space:pre-wrap;word-break:break-word;}
-.novedades-display:empty::before{content:'Sin novedades aún.';color:#bbb;font-style:italic;}
+.anim-fade-up{animation:fadeUp .5s cubic-bezier(.22,1,.36,1) both;}
+.anim-fade-in{animation:fadeIn .4s ease both;}
 
+/* ── HEADER ── */
+.main-header{
+  background:linear-gradient(120deg,#1a2a4a 0%,#304D85 60%,#1e3566 100%);
+  border-bottom:none;
+  padding:20px 28px 0;
+  display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  box-shadow:0 4px 20px rgba(48,77,133,.25);
+  position:sticky;top:0;z-index:50;
+}
+.main-title{
+  font-size:17px;font-weight:800;
+  color:#fff;
+  margin-bottom:14px;
+  letter-spacing:.3px;
+  text-shadow:0 1px 4px rgba(0,0,0,.2);
+}
+.main-title span{
+  font-size:11px;font-weight:500;
+  color:rgba(255,255,255,.6);
+  margin-left:8px;
+  background:rgba(255,255,255,.12);
+  padding:2px 8px;border-radius:10px;
+}
+
+/* ── TABS ── */
+.tabs{display:flex;}
+.tab-btn{
+  padding:12px 28px;font-size:12px;font-weight:700;
+  border:none;cursor:pointer;
+  border-radius:10px 10px 0 0;
+  transition:all .25s cubic-bezier(.22,1,.36,1);
+  letter-spacing:.4px;
+  border-bottom:3px solid transparent;
+  position:relative;overflow:hidden;
+}
+.tab-btn::after{
+  content:'';position:absolute;inset:0;
+  background:rgba(255,255,255,.12);
+  transform:translateY(100%);
+  transition:transform .25s;
+}
+.tab-btn:hover::after{transform:translateY(0);}
+.tab-btn.jet{background:rgba(255,255,255,.12);color:rgba(255,255,255,.75);}
+.tab-btn.jet.active{background:#fff;color:#304D85;border-bottom:3px solid #304D85;}
+.tab-btn.tv{background:rgba(255,255,255,.12);color:rgba(255,255,255,.75);}
+.tab-btn.tv.active{background:#fff;color:#C23543;border-bottom:3px solid #C23543;}
+
+/* ── NOVEDADES PILL ── */
+.nov-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 20px;
+  border-radius:50px;
+  font-size:12px;font-weight:800;
+  letter-spacing:.6px;
+  font-family:'Montserrat','Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#00c853 0%,#00e676 50%,#69ff47 100%);
+  color:#003d1a;
+  box-shadow:0 3px 16px rgba(0,200,83,.5);
+  text-transform:uppercase;
+  position:relative;overflow:hidden;
+  margin-bottom:14px;
+  animation:pulseGlow 2.5s ease-in-out infinite;
+}
+.nov-pill::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.3),transparent 60%);
+  border-radius:50px;pointer-events:none;
+}
+.nov-pill-dot{
+  width:9px;height:9px;border-radius:50%;
+  background:#003d1a;
+  box-shadow:0 0 0 0 rgba(0,61,26,.4);
+  animation:ping 1.8s ease-in-out infinite;
+  flex-shrink:0;
+}
+@keyframes ping{
+  0%,100%{box-shadow:0 0 0 0 rgba(0,61,26,.5);}
+  50%{box-shadow:0 0 0 5px rgba(0,61,26,.0);}
+}
+@keyframes pulseGlow{
+  0%,100%{box-shadow:0 3px 16px rgba(0,200,83,.5);}
+  50%{box-shadow:0 3px 28px rgba(0,230,118,.8);}
+}
+
+/* ── PANELS ── */
 .panel{display:none;}
-.panel.active{display:block;}
-.jet-bg .panel-header{background:linear-gradient(135deg,#304D85 0%,#1e3566 100%);color:#fff;padding:22px 32px 16px;}
-.tv-bg .panel-header{background:linear-gradient(135deg,#C23543 0%,#9b1f2c 100%);color:#fff;padding:22px 32px 16px;}
-.panel-header h2{font-size:18px;font-weight:700;letter-spacing:.2px;}
-.panel-header p{font-size:11px;opacity:.7;margin-top:5px;font-weight:500;}
-.content{padding:22px 32px;}
-.section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:12px;}
-.jet .section-title{color:#304D85;}
-.tv .section-title{color:#C23543;}
+.panel.active{display:block;animation:fadeIn .35s ease;}
 
-/* CARGA */
-.top-bar-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:26px;}
-.carga-wrap{flex:1;}
-.carga-toggle{display:inline-flex;align-items:center;gap:7px;padding:7px 15px;border-radius:6px 6px 0 0;border:none;cursor:pointer;font-size:11px;font-weight:600;letter-spacing:.5px;transition:all .15s;font-family:'Montserrat',sans-serif;}
-.jet .carga-toggle{background:#304D85;color:#fff;}
-.jet .carga-toggle:hover{background:#1e3566;}
-.tv .carga-toggle{background:#C23543;color:#fff;}
-.tv .carga-toggle:hover{background:#9b1f2c;}
-.carga-toggle .arrow{transition:transform .25s;font-size:12px;}
-.carga-toggle.open .arrow{transform:rotate(180deg);}
-.carga-body{display:none;border-radius:0 8px 8px 8px;border:1px solid #dde3ec;background:#fff;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.07);}
-.carga-body.open{display:block;}
-.auth-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.auth-row input{padding:8px 13px;border-radius:6px;border:1px solid #d0d7e3;font-size:12px;font-family:'Montserrat',sans-serif;width:175px;outline:none;}
-.jet .auth-row input:focus{border-color:#304D85;}
-.tv .auth-row input:focus{border-color:#C23543;}
-.auth-btn{padding:8px 18px;border-radius:6px;border:none;font-size:12px;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;}
-.jet .auth-btn{background:#304D85;color:#fff;}
-.tv .auth-btn{background:#C23543;color:#fff;}
-.auth-error{font-size:11px;color:#C23543;margin-top:6px;font-weight:500;}
-.form-inner{display:none;}
-.form-inner.visible{display:block;}
-.form-top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
-.form-top-bar span{font-size:11px;color:#888;font-weight:500;}
-.lock-btn{font-size:10px;padding:5px 11px;border-radius:5px;border:1px solid #d0d7e3;background:transparent;cursor:pointer;color:#888;font-family:'Montserrat',sans-serif;font-weight:500;}
-.lock-btn:hover{background:#f4f4f4;}
-.day-selector{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
-.day-btn{padding:5px 12px;border-radius:20px;border:1.5px solid;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;background:transparent;font-family:'Montserrat',sans-serif;}
-.jet .day-btn{border-color:#304D85;color:#304D85;}
-.jet .day-btn.active,.jet .day-btn:hover{background:#304D85;color:#fff;}
-.tv .day-btn{border-color:#C23543;color:#C23543;}
-.tv .day-btn.active,.tv .day-btn:hover{background:#C23543;color:#fff;}
-.fields-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:14px;}
-.field-wrap label{display:block;font-size:10px;font-weight:600;color:#888;margin-bottom:4px;text-transform:uppercase;letter-spacing:.6px;}
-.field-wrap input{width:100%;padding:7px 10px;border-radius:6px;border:1px solid #d0d7e3;background:#f9fafc;font-size:13px;font-family:'Montserrat',sans-serif;outline:none;}
-.jet .field-wrap input:focus{border-color:#304D85;background:#fff;}
-.tv .field-wrap input:focus{border-color:#C23543;background:#fff;}
-.save-btn{padding:8px 22px;border-radius:6px;border:none;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;font-family:'Montserrat',sans-serif;letter-spacing:.3px;}
-.jet .save-btn{background:#304D85;color:#fff;}
-.jet .save-btn:hover{background:#1e3566;}
-.tv .save-btn{background:#C23543;color:#fff;}
-.tv .save-btn:hover{background:#9b1f2c;}
-.save-btn:active{transform:scale(.97);}
+/* ── PANEL HEADER ── */
+.panel-header{padding:22px 28px 18px;color:#fff;position:relative;overflow:hidden;}
+.panel-header::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.jet-bg .panel-header{background:linear-gradient(135deg,#1a2a4a 0%,#304D85 50%,#2563c7 100%);}
+.tv-bg .panel-header{background:linear-gradient(135deg,#7a0e1a 0%,#C23543 50%,#e84057 100%);}
+.panel-header h2{font-size:22px;font-weight:800;letter-spacing:.3px;position:relative;}
+.panel-header p{font-size:11px;opacity:1;margin-top:5px;position:relative;}
 
-/* EQUIPOS SECTION */
-.equipos-fields-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin-bottom:10px;}
-.eq-divider{border:none;border-top:1px dashed #dde3ec;margin:14px 0;}
-.eq-total-row{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;margin-bottom:14px;}
-.eq-total-row span{color:#888;}
-.eq-total-val{font-weight:700;font-size:13px;}
-.eq-match-ok{color:#1a8a4a;}
-.eq-match-warn{color:#e07b00;}
+.content{padding:22px 28px;}
 
-/* KPIs */
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:26px;}
-.kpi-card{border-radius:10px;padding:14px 16px;border:1px solid transparent;}
-.kpi-label{font-size:10px;font-weight:700;margin-bottom:5px;text-transform:uppercase;letter-spacing:.7px;}
-.kpi-val{font-size:22px;font-weight:700;}
-.kpi-badge{display:inline-block;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;margin-top:4px;letter-spacing:.5px;}
-.kpi-sub{font-size:9px;margin-top:3px;opacity:.6;font-weight:500;}
-.jet-kpi{background:#edf1f9;border-color:#c5d0e8;}
-.jet-kpi .kpi-label{color:#304D85;}
-.jet-kpi .kpi-val{color:#1e3566;}
-.jet-kpi .kpi-badge{background:#304D85;color:#fff;}
-.tv-kpi{background:#faeaec;border-color:#f5c8cd;}
-.tv-kpi .kpi-label{color:#C23543;}
-.tv-kpi .kpi-val{color:#9b1f2c;}
-.tv-kpi .kpi-badge{background:#C23543;color:#fff;}
+.sec-title{
+  font-size:10px;font-weight:800;text-transform:uppercase;
+  letter-spacing:1.5px;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.sec-title::before{
+  content:'';width:3px;height:14px;border-radius:2px;flex-shrink:0;
+}
+.jet .sec-title{color:#304D85;}
+.jet .sec-title::before{background:linear-gradient(180deg,#304D85,#2563c7);}
+.tv .sec-title{color:#C23543;}
+.tv .sec-title::before{background:linear-gradient(180deg,#C23543,#e84057);}
 
-/* TABLAS */
-.table-wrap{overflow-x:auto;margin-bottom:28px;}
-table{width:100%;border-collapse:collapse;font-size:11px;min-width:520px;}
-th{font-weight:700;font-size:10px;padding:9px 10px;text-align:center;border-bottom:2px solid #dde3ec;color:#888;background:#f8f9fc;text-transform:uppercase;letter-spacing:.6px;}
+/* ── KPI CARDS ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:28px;}
+.kpi-card{
+  border-radius:14px;padding:16px 17px;
+  border:1.5px solid transparent;
+  position:relative;overflow:hidden;
+  transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s;
+  animation:fadeUp .5s cubic-bezier(.22,1,.36,1) both;
+  cursor:default;
+}
+.kpi-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.12);}
+.kpi-card::before{
+  content:'';position:absolute;top:-30px;right:-30px;
+  width:80px;height:80px;border-radius:50%;
+  opacity:.08;
+}
+.jet-kpi{background:linear-gradient(135deg,#edf1f9 0%,#dce4f5 100%);border-color:#8aaad8;}
+.jet-kpi::before{background:#304D85;}
+.tv-kpi{background:linear-gradient(135deg,#faeaec 0%,#f5d0d5 100%);border-color:#d87a88;}
+.tv-kpi::before{background:#C23543;}
+.kpi-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;}
+.kpi-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;}
+.jet-kpi .kpi-label{color:#1e3566;}
+.tv-kpi .kpi-label{color:#9b1f2c;}
+.kpi-badge{
+  font-size:8px;font-weight:700;padding:2px 7px;border-radius:8px;
+  letter-spacing:.4px;
+}
+.jet-kpi .kpi-badge{background:linear-gradient(135deg,#304D85,#2563c7);color:#fff;}
+.tv-kpi .kpi-badge{background:linear-gradient(135deg,#C23543,#e84057);color:#fff;}
+.kpi-val{
+  font-size:26px;font-weight:800;color:#1a1a2e;line-height:1.1;
+  animation:countUp .4s cubic-bezier(.22,1,.36,1) both;
+}
+.kpi-sub{font-size:9px;color:#333;margin-top:3px;font-weight:500;}
+
+/* PROGRESS BARS */
+.kpi-progress{margin-top:12px;}
+.kpi-prog-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.kpi-prog-label{font-size:9px;color:#222;font-weight:600;text-transform:uppercase;letter-spacing:.4px;}
+.kpi-prog-pct{font-size:12px;font-weight:800;}
+.prog-bar{
+  height:6px;border-radius:4px;background:rgba(0,0,0,.08);
+  overflow:hidden;margin-bottom:3px;
+}
+.prog-fill{
+  height:100%;border-radius:4px;
+  transition:width .8s cubic-bezier(.22,1,.36,1);
+  background-size:200% 100%;
+}
+.prog-fill.jet-fill{background:linear-gradient(90deg,#304D85,#2563c7,#009CDD);}
+.prog-fill.tv-fill{background:linear-gradient(90deg,#C23543,#e84057);}
+.prog-fill.ok-fill{background:linear-gradient(90deg,#1a8a4a,#22c55e);}
+.prog-fill.warn-fill{background:linear-gradient(90deg,#D06C2D,#f59e0b);}
+.kpi-rppto{font-size:9px;color:#333;font-weight:500;}
+.kpi-rppto strong{font-weight:700;}
+
+/* HIST CHIPS */
+.kpi-hist{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap;}
+.hist-chip{font-size:9px;font-weight:700;padding:2px 7px;border-radius:6px;letter-spacing:.3px;}
+.hist-chip.pos{background:#dcfce7;color:#15803d;}
+.hist-chip.neg{background:#fee2e2;color:#dc2626;}
+.hist-chip.neu{background:#f1f5f9;color:#0f172a;}
+
+/* SLA */
+.sla-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;margin-top:5px;}
+.sla-good{background:linear-gradient(135deg,#dcfce7,#bbf7d0);color:#15803d;}
+.sla-warn{background:linear-gradient(135deg,#fef9c3,#fef08a);color:#a16207;}
+.sla-bad{background:linear-gradient(135deg,#fee2e2,#fecaca);color:#dc2626;}
+
+/* ── COLLAPSIBLE ── */
+.collapsible-wrap{margin-bottom:16px;}
+.coll-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 18px;border-radius:10px 10px 0 0;
+  border:none;cursor:pointer;font-size:11px;font-weight:700;
+  letter-spacing:.5px;font-family:'Montserrat','Segoe UI',sans-serif;
+  transition:all .2s;
+  position:relative;overflow:hidden;
+}
+.jet .coll-btn{
+  background:linear-gradient(135deg,#304D85,#2563c7);color:#fff;
+  box-shadow:0 3px 10px rgba(48,77,133,.35);
+}
+.jet .coll-btn:hover{box-shadow:0 5px 16px rgba(48,77,133,.45);transform:translateY(-1px);}
+.tv .coll-btn{
+  background:linear-gradient(135deg,#C23543,#e84057);color:#fff;
+  box-shadow:0 3px 10px rgba(194,53,67,.35);
+}
+.tv .coll-btn:hover{box-shadow:0 5px 16px rgba(194,53,67,.45);transform:translateY(-1px);}
+.coll-btn .arrow{transition:transform .3s cubic-bezier(.22,1,.36,1);}
+.coll-btn.open .arrow{transform:rotate(180deg);}
+.coll-body{
+  display:none;
+  border-radius:0 10px 10px 10px;
+  border:1.5px solid #e2e8f4;
+  background:#fff;padding:18px 22px;
+  box-shadow:0 4px 16px rgba(0,0,0,.07);
+}
+.coll-body.open{display:block;animation:slideDown .25s ease;}
+
+/* ── TABLES ── */
+.table-wrap{overflow-x:auto;margin-bottom:6px;}
+table{width:100%;border-collapse:collapse;font-size:11px;min-width:480px;}
+th{
+  font-weight:700;font-size:10px;padding:9px 11px;
+  text-align:center;border-bottom:2px solid #e2e8f4;
+  color:#0f172a;background:linear-gradient(180deg,#f8fafc,#f1f5f9);
+  text-transform:uppercase;letter-spacing:.6px;
+}
 th:first-child{text-align:left;}
-td{padding:9px 10px;text-align:center;border-bottom:1px solid #f0f4f9;color:#1a1a2e;font-weight:500;}
+td{padding:9px 11px;text-align:center;border-bottom:1px solid #f1f5f9;color:#1a1a2e;font-weight:500;}
 td:first-child{text-align:left;font-weight:600;}
-.jet td.total-cell{color:#304D85;font-weight:700;}
-.tv td.total-cell{color:#C23543;font-weight:700;}
+.jet td.tot{color:#1e3566;font-weight:800;}
+.tv td.tot{color:#9b1f2c;font-weight:800;}
+tr.total-row td{background:linear-gradient(180deg,#edf1f9,#dce4f5);font-weight:700;}
+.tv tr.total-row td{background:linear-gradient(180deg,#faeaec,#f5d0d5);}
+tbody tr{transition:background .15s;}
 .jet tbody tr:hover td{background:#edf1f9;}
 .tv tbody tr:hover td{background:#faeaec;}
-.arrow-up{color:#1a8a4a;font-size:13px;margin-left:3px;}
-.arrow-down{color:#e07b00;font-size:13px;margin-left:3px;}
-.usd-disclaimer{font-size:10px;color:#888;font-weight:500;margin-bottom:18px;font-style:italic;}
+.arr-up{color:#dc2626;font-weight:700;}
+.arr-dn{color:#15803d;font-weight:700;}
+td.var-pos{color:#15803d;font-weight:700;}
+td.var-neg{color:#dc2626;font-weight:700;}
+td.var-neu{color:#1e293b;}
 
-/* CHARTS */
-.chart-section{border-radius:12px;border:1px solid #e4eaf3;background:#fff;padding:18px 22px;margin-bottom:22px;}
-.chart-legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:12px;font-size:11px;color:#666;font-weight:600;}
-.legend-dot{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:5px;vertical-align:middle;}
+/* ── CHARTS ── */
+.chart-section{
+  border-radius:14px;
+  border:1.5px solid #e2e8f4;
+  background:linear-gradient(180deg,#fff 0%,#fafbff 100%);
+  padding:18px 22px;margin-bottom:20px;
+  box-shadow:0 2px 12px rgba(0,0,0,.06);
+  transition:box-shadow .25s;
+}
+.chart-section:hover{box-shadow:0 6px 24px rgba(0,0,0,.1);}
+.chart-legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px;font-size:11px;color:#0f172a;font-weight:600;}
+.ldot{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:5px;vertical-align:middle;}
 
-/* FOOTER */
-.footer-note{background:#fff;border-top:1px solid #e4eaf3;margin-top:8px;padding:16px 32px;display:flex;align-items:center;gap:12px;border-radius:0 0 8px 8px;}
-.footer-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
-.jet .footer-icon{background:#edf1f9;}
-.tv .footer-icon{background:#faeaec;}
-.footer-text{font-size:11px;color:#666;font-weight:500;line-height:1.6;}
-.footer-text strong{font-weight:700;color:#1a1a2e;}
+/* ── FOOTER ── */
+.footer-note{
+  background:linear-gradient(135deg,#f8fafc,#f1f5f9);
+  border-top:1.5px solid #e2e8f4;
+  padding:16px 28px;display:flex;align-items:center;gap:12px;
+  margin-top:4px;
+}
+.footer-icon{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.jet .footer-icon{background:linear-gradient(135deg,#edf1f9,#dce4f5);}
+.tv .footer-icon{background:linear-gradient(135deg,#faeaec,#f5d0d5);}
+.footer-text{font-size:10px;color:#1e293b;font-weight:500;line-height:1.6;}
+.footer-text strong{color:#1a1a2e;}
 
-.toast{position:fixed;bottom:24px;right:24px;padding:10px 18px;border-radius:8px;color:#fff;font-size:12px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999;font-family:'Montserrat',sans-serif;}
-.toast.show{opacity:1;}
-.jet-toast{background:#304D85;}
-.tv-toast{background:#C23543;}
-.nov-toast{background:#c8a800;}
+.usd-note{font-size:10px;color:#1e293b;font-style:italic;margin-bottom:12px;}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:24px;right:24px;
+  padding:11px 20px;border-radius:10px;color:#fff;
+  font-size:12px;font-weight:700;opacity:0;
+  transition:opacity .3s,transform .3s;
+  pointer-events:none;z-index:999;
+  font-family:'Montserrat','Segoe UI',sans-serif;
+  transform:translateY(10px);
+  box-shadow:0 4px 20px rgba(0,0,0,.2);
+}
+.toast.show{opacity:1;transform:translateY(0);}
+.toast-nov{background:linear-gradient(135deg,#16a34a,#22c55e);}
 </style>
 </head>
 <body>
 
-
-    <div class="login-title">Resumen semanal Ciber Lunes</div>
-    <div class="login-sub">Junio 2026 · Acceso restringido<br>Solo personal autorizado</div>
-    <label class="login-label">Contraseña de acceso</label>
-    <input class="login-input" type="password" id="login-pwd" placeholder="Ingresá tu contraseña" onkeydown="if(event.key==='Enter')doLogin()">
-    <div class="login-error" id="login-error"></div>
-    <button class="login-btn" onclick="doLogin()">Ingresar al reporte</button>
-    <div class="login-footer">Jetmar Viajes &amp; Tienda Viajes · Confidencial</div>
-  </div>
-</div>
-
-
-<div id="page-login" style="min-height:100vh;margin:0;padding:0;">
-<style>
-#page-login{
-  min-height:100vh;
-  width:100%;
-  background:linear-gradient(150deg,#0d1b2a 0%,#304D85 55%,#C23543 100%);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  font-family:'Montserrat','Segoe UI',sans-serif;
-  padding:20px;
-  box-sizing:border-box;
-  position:relative;
-  z-index:1;
-}
-.lp-card{
-  background:#fff;border-radius:20px;
-  padding:44px 48px;width:100%;max-width:400px;
-  box-shadow:0 32px 80px rgba(0,0,0,.35);
-  text-align:center;
-  animation:lp-appear .45s cubic-bezier(.22,1,.36,1);
-}
-@keyframes lp-appear{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
-.lp-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:#edf1f9;border-radius:20px;
-  padding:6px 16px;font-size:11px;font-weight:700;color:#304D85;
-  letter-spacing:.6px;text-transform:uppercase;margin-bottom:20px;
-}
-.lp-title{font-size:20px;font-weight:700;color:#1a1a2e;margin-bottom:6px;line-height:1.3;}
-.lp-sub{font-size:12px;color:#999;font-weight:500;margin-bottom:32px;line-height:1.6;}
-.lp-divider{display:flex;align-items:center;gap:10px;margin-bottom:24px;}
-.lp-divider::before,.lp-divider::after{content:'';flex:1;height:1px;background:#eee;}
-.lp-divider span{font-size:10px;color:#ccc;font-weight:600;letter-spacing:.5px;}
-.lp-label{display:block;font-size:10px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px;text-align:left;}
-.lp-input-wrap{position:relative;margin-bottom:8px;}
-.lp-input{
-  width:100%;padding:13px 44px 13px 16px;
-  border-radius:10px;border:1.5px solid #e0e6f0;
-  font-family:'Montserrat',sans-serif;font-size:14px;
-  outline:none;transition:border .2s,box-shadow .2s;
-  color:#1a1a2e;background:#fafbfd;
-}
-.lp-input:focus{border-color:#304D85;box-shadow:0 0 0 3px rgba(48,77,133,.1);background:#fff;}
-.lp-eye{
-  position:absolute;right:13px;top:50%;transform:translateY(-50%);
-  background:none;border:none;cursor:pointer;font-size:16px;color:#aaa;padding:0;
-}
-.lp-error{
-  font-size:11px;color:#C23543;font-weight:600;
-  min-height:18px;margin-bottom:14px;text-align:left;
-  display:flex;align-items:center;gap:5px;
-}
-.lp-btn{
-  width:100%;padding:14px;border-radius:10px;border:none;
-  background:linear-gradient(135deg,#304D85 0%,#1e3566 100%);
-  color:#fff;font-family:'Montserrat',sans-serif;
-  font-size:13px;font-weight:700;cursor:pointer;
-  letter-spacing:.4px;transition:opacity .2s,transform .15s;
-  margin-bottom:0;
-}
-.lp-btn:hover{opacity:.88;}
-.lp-btn:active{transform:scale(.98);}
-.lp-confidential{
-  margin-top:20px;font-size:10px;color:#bbb;font-weight:500;
-  display:flex;align-items:center;justify-content:center;gap:5px;
-}
-.lp-shake{animation:lp-shake .4s ease;}
-@keyframes lp-shake{0%,100%{transform:translateX(0);}20%,60%{transform:translateX(-6px);}40%,80%{transform:translateX(6px);}}
-</style>
-
-  <div class="lp-card" id="lp-card">
-    <div class="lp-badge">🔒 Acceso restringido</div>
-    <div class="lp-title">Resumen semanal<br>Ciber Lunes — Junio 2026</div>
-    <div class="lp-sub">Solo personal autorizado.<br>Ingresá tu contraseña para continuar.</div>
-    <div class="lp-divider"><span>Autenticación</span></div>
-    <label class="lp-label" for="lp-pwd">Contraseña</label>
-    <div class="lp-input-wrap">
-      <input class="lp-input" type="password" id="lp-pwd" placeholder="••••••••••••" onkeydown="if(event.key==='Enter')doLogin()">
-      <button class="lp-eye" onclick="togglePwdVis()" tabindex="-1" id="lp-eye-btn">👁</button>
-    </div>
-    <div class="lp-error" id="lp-error"></div>
-    <button class="lp-btn" onclick="doLogin()">Ingresar al reporte →</button>
-    <div class="lp-confidential">🏢 Jetmar Viajes &amp; Tienda Viajes &nbsp;·&nbsp; Confidencial</div>
-  </div>
-</div>
-
-<div id="page-report" style="display:none;">
-<div class="main-header" style="position:relative;">
-  <div class="main-header-left">
-    <div class="main-title">Resumen semanal de Ciber Lunes — Junio 2026</div>
+<div class="main-header">
+  <div>
+    <div class="main-title">Resumen semanal Ciber Lunes <span>Junio 2026</span></div>
     <div class="tabs">
-      <button class="tab-btn jet active" onclick="switchTab('jet')">✈&nbsp; Jetmar Viajes</button>
-      <button class="tab-btn tv" onclick="switchTab('tv')">🏪&nbsp; Tienda Viajes</button>
+      <button class="tab-btn jet active" onclick="switchTab('jet')">✈ Jetmar Viajes</button>
+      <button class="tab-btn tv" onclick="switchTab('tv')">🏪 Tienda Viajes</button>
     </div>
   </div>
-  <!-- NOVEDADES -->
-  <div class="novedades-wrap" style="position:relative;">
-    <button class="novedades-toggle" id="toggle-nov" onclick="toggleNov()">
-      💬 &nbsp;NOVEDADES &nbsp;<span class="arrow">&#8964;</span>
-    </button>
-    <div class="novedades-body" id="carga-nov">
-      <div style="font-size:11px;font-weight:700;color:#7a5000;margin-bottom:8px;text-transform:uppercase;letter-spacing:.8px;">📌 Mensaje del equipo</div>
-      <textarea id="nov-textarea" placeholder="Escribí tu mensaje acá... puedes usar emojis 🎯✅🔥"></textarea>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
-        <button class="novedades-save" onclick="saveNov()">Publicar</button>
-        <button onclick="clearNov()" style="font-size:10px;background:transparent;border:none;cursor:pointer;color:#aaa;font-family:'Montserrat',sans-serif;">Borrar</button>
-      </div>
-      <div style="border-top:1px dashed #e8d97a;margin:12px 0 8px;"></div>
-      <div style="font-size:10px;font-weight:600;color:#9a7500;text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;">Último mensaje:</div>
-      <div class="novedades-display" id="nov-display"></div>
+  <div class="nov-pill">
+  <span class="nov-pill-dot"></span>
+  <span>Datos Actualizados</span>
+</div>
     </div>
   </div>
 </div>
@@ -284,450 +331,188 @@ td:first-child{text-align:left;font-weight:600;}
 <div id="panel-jet" class="panel active jet-bg jet">
   <div class="panel-header">
     <h2>Jetmar Viajes</h2>
-    <p>Semana: Lun 1/6 &rarr; Lun 8/6 &middot; 2026</p>
+    <p>Ciber Lunes Junio 2026 · Lun 1/6 → Lun 8/6</p>
   </div>
   <div class="content">
 
-    <div class="top-bar-row">
-      <div class="carga-wrap">
-        <button class="carga-toggle" id="toggle-jet" onclick="toggleCarga('jet')">
-          &#128274; &nbsp;CARGA DE DATOS &nbsp;<span class="arrow">&#8964;</span>
-        </button>
-        <div class="carga-body" id="carga-jet">
-          <div id="auth-jet">
-            <div class="auth-row">
-              <input type="password" id="pwd-jet" placeholder="Contraseña" onkeydown="if(event.key==='Enter')checkAuth('jet')">
-              <button class="auth-btn" onclick="checkAuth('jet')">Ingresar</button>
-            </div>
-            <div id="auth-msg-jet"></div>
-          </div>
-          <div class="form-inner" id="form-jet">
-            <div class="form-top-bar">
-              <span>Seleccioná el día y completá los valores:</span>
-              <button class="lock-btn" onclick="lockPanel('jet')">&#128274; Cerrar sesión</button>
-            </div>
-            <div class="day-selector" id="jet-days"></div>
-            <div class="fields-grid" id="jet-fields"></div>
+    <div class="sec-title">Totales acumulados</div>
+    <div class="kpi-grid" id="jet-kpis"></div>
 
-            <div class="eq-divider"></div>
-            <div style="font-size:10px;font-weight:700;color:#304D85;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">⚡ Cobranza por equipo (USD)</div>
-            <div class="equipos-fields-grid" id="jet-eq-fields"></div>
-            <div class="eq-total-row">
-              <span>Total equipos:</span>
-              <span id="jet-eq-total" class="eq-total-val">0</span>
-              <span id="jet-eq-match" style="font-size:11px;"></span>
-            </div>
-
-            <button class="save-btn" onclick="saveDay('jet')">Guardar día</button>
-          </div>
-        </div>
+    <div class="collapsible-wrap">
+      <button class="coll-btn" id="jet-obj-btn" onclick="toggleColl('jet-obj')">📊 Distribución diaria — Consultas y Oportunidades <span class="arrow">&#8964;</span></button>
+      <div class="coll-body" id="jet-obj">
+        <div class="table-wrap"><table id="jet-obj-table"></table></div>
       </div>
     </div>
 
-    <div class="section-title">Totales acumulados</div>
-    <div class="kpi-grid" id="jet-kpis"></div>
-
-    <div class="section-title">Detalle por día</div>
-    <div class="usd-disclaimer">* Los valores de Cobranza están expresados en USD.</div>
-    <div class="table-wrap"><table id="jet-table"></table></div>
-
-    <div style="margin-bottom:6px;">
-      <button class="carga-toggle" id="toggle-jet-eq" onclick="toggleEqTable()" style="border-radius:6px 6px 0 0;font-size:11px;">
-        📊 &nbsp;COBRANZA POR EQUIPO — DETALLE DIARIO &nbsp;<span class="arrow" id="jet-eq-arrow">&#8964;</span>
-      </button>
-    </div>
-    <div id="jet-eq-section" style="display:none;border-radius:0 8px 8px 8px;border:1px solid #c5d0e8;background:#fff;padding:14px 18px;margin-bottom:28px;">
-      <div class="usd-disclaimer" style="margin-bottom:10px;">* Valores en USD. Las flechas indican variación respecto al día anterior.</div>
-      <div class="table-wrap" style="margin-bottom:0;"><table id="jet-eq-table"></table></div>
+    <div class="collapsible-wrap">
+      <button class="coll-btn" id="jet-det-btn" onclick="toggleColl('jet-det')">📋 Detalle por día <span class="arrow">&#8964;</span></button>
+      <div class="coll-body" id="jet-det">
+        <div class="usd-note">* Cobranza, Subvención, Utilidad SSV y CSV expresados en USD.</div>
+        <div class="table-wrap"><table id="jet-table"></table></div>
+      </div>
     </div>
 
-    <div class="chart-section">
-      <div class="section-title" style="margin-bottom:6px;">EVOLUCIÓN YTD — COBRANZA Y FICHAS ABIERTAS</div>
-      <div class="chart-legend" id="jet-legend1"></div>
-      <div style="position:relative;height:210px;"><canvas id="jet-chart1" role="img" aria-label="EVOLUCIÓN YTD — COBRANZA Y FICHAS ABIERTAS Jetmar"></canvas></div>
+    <div class="collapsible-wrap">
+      <button class="coll-btn" id="jet-eq-btn" onclick="toggleColl('jet-eq')">⚡ Cobranza por equipo — detalle diario <span class="arrow">&#8964;</span></button>
+      <div class="coll-body" id="jet-eq">
+        <div class="usd-note">* Valores en USD. ▲ sube ▼ baja respecto al día anterior.</div>
+        <div class="table-wrap"><table id="jet-eq-table"></table></div>
+      </div>
     </div>
 
     <div class="chart-section">
-      <div class="section-title" style="margin-bottom:6px;">EVOLUCIÓN YTD — CONSULTAS Y OPORTUNIDADES</div>
-      <div class="chart-legend" id="jet-legend2"></div>
-      <div style="position:relative;height:210px;"><canvas id="jet-chart2" role="img" aria-label="EVOLUCIÓN YTD — CONSULTAS Y OPORTUNIDADES Jetmar"></canvas></div>
+      <div class="sec-title" style="margin-bottom:6px;">EVOLUCIÓN YTD — COBRANZA Y FICHAS ABIERTAS</div>
+      <div class="chart-legend" id="jet-leg1"></div>
+      <div style="position:relative;height:200px;"><canvas id="jet-c1"></canvas></div>
+    </div>
+    <div class="chart-section">
+      <div class="sec-title" style="margin-bottom:6px;">EVOLUCIÓN YTD — CONSULTAS Y OPORTUNIDADES</div>
+      <div class="chart-legend" id="jet-leg2"></div>
+      <div style="position:relative;height:200px;"><canvas id="jet-c2"></canvas></div>
     </div>
 
     <div class="footer-note">
       <div class="footer-icon">📋</div>
-      <div class="footer-text">Los datos son actualizados entre las <strong>10:30 y 11:30 hs del día siguiente</strong>, por <strong>Yanhila Pintos</strong>.</div>
+      <div class="footer-text">Todos los datos aquí descriptos corresponden al cierre del <strong>día anterior</strong>. Modificados por <strong>YP</strong>.</div>
     </div>
   </div>
 </div>
 
-<!-- ===== TIENDA VIAJES ===== -->
+<!-- ===== TIENDA ===== -->
 <div id="panel-tv" class="panel tv-bg tv">
   <div class="panel-header">
     <h2>Tienda Viajes</h2>
-    <p>Semana: Lun 1/6 &rarr; Lun 8/6 &middot; 2026</p>
+    <p>Ciber Lunes Junio 2026 · Lun 1/6 → Lun 8/6</p>
   </div>
   <div class="content">
-    <div class="top-bar-row">
-      <div class="carga-wrap">
-        <button class="carga-toggle" id="toggle-tv" onclick="toggleCarga('tv')">
-          &#128274; &nbsp;CARGA DE DATOS &nbsp;<span class="arrow">&#8964;</span>
-        </button>
-        <div class="carga-body" id="carga-tv">
-          <div id="auth-tv">
-            <div class="auth-row">
-              <input type="password" id="pwd-tv" placeholder="Contraseña" onkeydown="if(event.key==='Enter')checkAuth('tv')">
-              <button class="auth-btn" onclick="checkAuth('tv')">Ingresar</button>
-            </div>
-            <div id="auth-msg-tv"></div>
-          </div>
-          <div class="form-inner" id="form-tv">
-            <div class="form-top-bar">
-              <span>Seleccioná el día y completá los valores:</span>
-              <button class="lock-btn" onclick="lockPanel('tv')">&#128274; Cerrar sesión</button>
-            </div>
-            <div class="day-selector" id="tv-days"></div>
-            <div class="fields-grid" id="tv-fields"></div>
-            <button class="save-btn" onclick="saveDay('tv')">Guardar día</button>
-          </div>
-        </div>
+
+    <div class="sec-title">Totales acumulados</div>
+    <div class="kpi-grid" id="tv-kpis"></div>
+
+    <div class="collapsible-wrap">
+      <button class="coll-btn" id="tv-obj-btn" onclick="toggleColl('tv-obj')">📊 Distribución diaria — Consultas y Oportunidades <span class="arrow">&#8964;</span></button>
+      <div class="coll-body" id="tv-obj">
+        <div class="table-wrap"><table id="tv-obj-table"></table></div>
       </div>
     </div>
 
-    <div class="section-title">Totales acumulados</div>
-    <div class="kpi-grid" id="tv-kpis"></div>
-
-    <div class="section-title">Detalle por día</div>
-    <div class="usd-disclaimer">* Los valores de Cobranza están expresados en USD.</div>
-    <div class="table-wrap"><table id="tv-table"></table></div>
+    <div class="collapsible-wrap">
+      <button class="coll-btn" id="tv-det-btn" onclick="toggleColl('tv-det')">📋 Detalle por día <span class="arrow">&#8964;</span></button>
+      <div class="coll-body" id="tv-det">
+        <div class="usd-note">* Cobranza expresada en USD.</div>
+        <div class="table-wrap"><table id="tv-table"></table></div>
+      </div>
+    </div>
 
     <div class="chart-section">
-      <div class="section-title" style="margin-bottom:6px;">EVOLUCIÓN YTD — COBRANZA Y FICHAS ABIERTAS</div>
-      <div class="chart-legend" id="tv-legend1"></div>
-      <div style="position:relative;height:210px;"><canvas id="tv-chart1" role="img" aria-label="EVOLUCIÓN YTD — COBRANZA Y FICHAS ABIERTAS Tienda Viajes"></canvas></div>
+      <div class="sec-title" style="margin-bottom:6px;">EVOLUCIÓN YTD — COBRANZA Y FICHAS ABIERTAS</div>
+      <div class="chart-legend" id="tv-leg1"></div>
+      <div style="position:relative;height:200px;"><canvas id="tv-c1"></canvas></div>
     </div>
     <div class="chart-section">
-      <div class="section-title" style="margin-bottom:6px;">EVOLUCIÓN YTD — CONSULTAS Y OPORTUNIDADES</div>
-      <div class="chart-legend" id="tv-legend2"></div>
-      <div style="position:relative;height:210px;"><canvas id="tv-chart2" role="img" aria-label="EVOLUCIÓN YTD — CONSULTAS Y OPORTUNIDADES Tienda Viajes"></canvas></div>
+      <div class="sec-title" style="margin-bottom:6px;">EVOLUCIÓN YTD — CONSULTAS Y OPORTUNIDADES</div>
+      <div class="chart-legend" id="tv-leg2"></div>
+      <div style="position:relative;height:200px;"><canvas id="tv-c2"></canvas></div>
     </div>
 
     <div class="footer-note">
       <div class="footer-icon">📋</div>
-      <div class="footer-text">Los datos son actualizados entre las <strong>10:30 y 11:30 hs del día siguiente</strong>, por <strong>Yanhila Pintos</strong>.</div>
+      <div class="footer-text">Todos los datos aquí descriptos corresponden al cierre del <strong>día anterior</strong>. Modificados por <strong>YP</strong>.</div>
     </div>
   </div>
 </div>
 
-</div><!-- /page-report -->
-<div class="toast jet-toast" id="toast-jet">✓ Datos guardados</div>
-<div class="toast tv-toast" id="toast-tv">✓ Datos guardados</div>
-<div class="toast nov-toast" id="toast-nov">💬 Novedad publicada</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-const KPIS=['Cobranza (USD)','Cantidad de Consultas','Cantidad de Oportunidades','Fichas abiertas','Cantidad de Cupones'];
-const KPIS_TV=['Cobranza (USD)','Cantidad de Consultas','Cantidad de Oportunidades','Fichas abiertas'];
-const INV_KEY='Inversión Cupones (USD)';
-function getKPIS(co){return co==='tv'?KPIS_TV:KPIS;}
-const EQUIPOS=['Vacacional Sucursales','Equipo Venta Digital','Costa Rica','Corporativo','Aeropuerto'];
+// ── DÍAS ──────────────────────────────────────────────────────────────────────
 const DAYS=[{l:'Lun',d:'1/6'},{l:'Mar',d:'2/6'},{l:'Mié',d:'3/6'},{l:'Jue',d:'4/6'},{l:'Vie',d:'5/6'},{l:'Sáb',d:'6/6'},{l:'Dom',d:'7/6'},{l:'Lun',d:'8/6'}];
-const CHART1_KPIS=[0,3];
-const CHART2_KPIS=[1,2];
-const ALL_KPIS=[0,1,2,3,4];
-const PASSWD='Ciber26';
-const state={jet:{},tv:{}};
-const eqState={};
-const charts={};
-let activeDay={jet:0,tv:0};
-const COLORS={
-  jet:{chart1:['#304D85','#009CDD'],chart2:['#D06C2D','#E19AA1']},
-  tv:{chart1:['#C23543','#D06C2D'],chart2:['#304D85','#009CDD']}
+
+// ── OBJETIVOS ─────────────────────────────────────────────────────────────────
+const OBJ={
+  jet:{cob:3700000,cons:4653,opor:2156,subs:16000},
+  tv:{cob:720000,cons:990,opor:500}
+};
+// Obj diarios Jetmar [Lun,Mar,Mié,Jue,Vie,Sáb,Dom,Lun]
+const OBJ_DIARIO_JET={
+  cons:[1489,922,602,460,492,391,335,0],
+  opor:[690,427,279,213,228,181,155,0]
+};
+const OBJ_DIARIO_TV={
+  cons:[372,269,115,41,55,46,34,0],
+  opor:[186,135,58,21,28,23,17,0]
 };
 
-function loadState(co){
-  try{const d=localStorage.getItem('rpt_v4_'+co);if(d)state[co]=JSON.parse(d);}catch(e){}
-  try{const d=localStorage.getItem('rpt_v4_eq_'+co);if(d)eqState[co]=JSON.parse(d);}catch(e){}
-  if(!eqState[co])eqState[co]={};
-}
-function saveState(co){
-  try{localStorage.setItem('rpt_v4_'+co,JSON.stringify(state[co]));}catch(e){}
-  try{localStorage.setItem('rpt_v4_eq_'+co,JSON.stringify(eqState[co]));}catch(e){}
-}
-function getVal(co,day,kpi){return(state[co][day]&&state[co][day][kpi]!==undefined)?state[co][day][kpi]:'';}
-function getEqVal(co,day,eq){return(eqState[co][day]&&eqState[co][day][eq]!==undefined)?eqState[co][day][eq]:'';}
-
-function toggleCarga(co){
-  const body=document.getElementById('carga-'+co);
-  const btn=document.getElementById('toggle-'+co);
-  const isOpen=body.classList.contains('open');
-  body.classList.toggle('open',!isOpen);
-  btn.classList.toggle('open',!isOpen);
-}
-
-function toggleNov(){
-  const body=document.getElementById('carga-nov');
-  const btn=document.getElementById('toggle-nov');
-  const isOpen=body.classList.contains('open');
-  body.classList.toggle('open',!isOpen);
-  btn.classList.toggle('open',!isOpen);
-}
-
-function saveNov(){
-  const txt=document.getElementById('nov-textarea').value.trim();
-  try{localStorage.setItem('rpt_v4_nov',txt);}catch(e){}
-  document.getElementById('nov-display').textContent=txt;
-  showToast('nov');
-}
-function clearNov(){
-  document.getElementById('nov-textarea').value='';
-  document.getElementById('nov-display').textContent='';
-  try{localStorage.removeItem('rpt_v4_nov');}catch(e){}
-}
-function loadNov(){
-  try{
-    const d=localStorage.getItem('rpt_v4_nov');
-    if(d){document.getElementById('nov-textarea').value=d;document.getElementById('nov-display').textContent=d;}
-  }catch(e){}
-}
-
-function checkAuth(co){
-  const val=document.getElementById('pwd-'+co).value;
-  const msg=document.getElementById('auth-msg-'+co);
-  if(val===PASSWD){
-    document.getElementById('auth-'+co).style.display='none';
-    document.getElementById('form-'+co).classList.add('visible');
-    msg.textContent='';
-  } else {
-    msg.className='auth-error';
-    msg.textContent='Contraseña incorrecta. Intentá de nuevo.';
-    document.getElementById('pwd-'+co).value='';
-  }
-}
-function lockPanel(co){
-  document.getElementById('form-'+co).classList.remove('visible');
-  document.getElementById('auth-'+co).style.display='block';
-  document.getElementById('pwd-'+co).value='';
-  document.getElementById('auth-msg-'+co).textContent='';
-  document.getElementById('carga-'+co).classList.remove('open');
-  document.getElementById('toggle-'+co).classList.remove('open');
-}
-
-function buildDays(co){
-  document.getElementById(co+'-days').innerHTML=DAYS.map((d,i)=>
-    `<button class="day-btn${i===activeDay[co]?' active':''}" onclick="selectDay('${co}',${i})">${d.l} ${d.d}</button>`
-  ).join('');
-}
-function selectDay(co,i){activeDay[co]=i;buildDays(co);buildFields(co);}
-
-function buildFields(co){
-  const day=activeDay[co];
-  const kpis=getKPIS(co);
-  let html=kpis.map((k,j)=>
-    `<div class="field-wrap"><label>${k}</label><input type="number" min="0" id="${co}-f-${j}" placeholder="0" value="${getVal(co,day,k)}"></div>`
-  ).join('');
-  // Add inversión en USD field only for jet
-  if(co==='jet'){
-    html+=`<div class="field-wrap" style="border-left:2px solid #D06C2D;padding-left:8px;">
-      <label style="color:#D06C2D;">Inversión Cupones (USD)</label>
-      <input type="number" min="0" id="${co}-f-inv" placeholder="0" value="${getVal(co,day,INV_KEY)}">
-    </div>`;
-  }
-  document.getElementById(co+'-fields').innerHTML=html;
-  if(co==='jet') buildEqFields(co,day);
-}
-
-function buildEqFields(co,day){
-  const el=document.getElementById('jet-eq-fields');
-  if(!el)return;
-  el.innerHTML=EQUIPOS.map((eq,j)=>
-    `<div class="field-wrap"><label>${eq}</label><input type="number" min="0" id="jet-eq-f-${j}" placeholder="0" value="${getEqVal(co,day,eq)}" oninput="updateEqTotal()"></div>`
-  ).join('');
-  updateEqTotal();
-}
-
-function updateEqTotal(){
-  let sum=0;
-  EQUIPOS.forEach((_,j)=>{
-    const v=document.getElementById('jet-eq-f-'+j);
-    if(v&&v.value!=='')sum+=Number(v.value);
-  });
-  const cobEl=document.getElementById('jet-f-0');
-  const cobVal=cobEl&&cobEl.value!==''?Number(cobEl.value):null;
-  document.getElementById('jet-eq-total').textContent=sum.toLocaleString('es-AR');
-  const matchEl=document.getElementById('jet-eq-match');
-  if(cobVal!==null){
-    if(sum===cobVal){matchEl.textContent='✅ Coincide con Cobranza total';matchEl.className='eq-match-ok';}
-    else{matchEl.textContent=`⚠️ Diferencia: ${(sum-cobVal).toLocaleString('es-AR')} vs ${cobVal.toLocaleString('es-AR')} total`;matchEl.className='eq-match-warn';}
-  } else {matchEl.textContent='';}
-}
-
-function saveDay(co){
-  const day=activeDay[co];
-  if(!state[co][day])state[co][day]={};
-  getKPIS(co).forEach((k,j)=>{const v=document.getElementById(co+'-f-'+j).value;state[co][day][k]=v===''?'':Number(v);});
-  const invEl=document.getElementById(co+'-f-inv');
-  if(invEl){state[co][day][INV_KEY]=invEl.value===''?'':Number(invEl.value);}
-  if(co==='jet'){
-    if(!eqState[co][day])eqState[co][day]={};
-    EQUIPOS.forEach((eq,j)=>{const v=document.getElementById('jet-eq-f-'+j);if(v){eqState[co][day][eq]=v.value===''?'':Number(v.value);}});
-  }
-  saveState(co);renderAll(co);showToast(co);
-}
-
-function showToast(co){
-  const t=document.getElementById('toast-'+co);
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2200);
-}
-
-const OBJECTIVES={
-  jet:{0:3700000,1:4650,2:2200,4:null},
-  tv:{0:720000,1:990,2:500,4:null}
+// ── HISTÓRICOS JETMAR (Ciber Jun 25 y Nov 25) ─────────────────────────────────
+const HIST_JET={
+  jun25:{cob:1505368,cons:1848,opor:601,fichas:230,cupones:217,subs:42050,utilSSV:113880,utilCSV:155930},
+  nov25:{cob:2743814,cons:null,opor:null,fichas:null,cupones:442,subs:42050,utilSSV:113880,utilCSV:155930}
 };
-const CUPON_BUDGET=16000;
 
-function buildKPIs(co){
-  const cls=co==='jet'?'jet-kpi':'tv-kpi';
-  const accentColor=co==='jet'?'#304D85':'#C23543';
-  let html=getKPIS(co).map((k,ki)=>{
-    let t=0;
-    DAYS.forEach((_,i)=>{const v=getVal(co,i,k);if(v!=='')t+=Number(v);});
-    const badge=ki===0?`<span class="kpi-badge">USD</span>`:'';
-    const obj=OBJECTIVES[co]&&OBJECTIVES[co][ki]!==undefined&&OBJECTIVES[co][ki]!==null?OBJECTIVES[co][ki]:null;
-    let ppto='';
-    if(obj!==null){
-      const pct=obj>0?Math.round((t/obj)*100):0;
-      const isOver=pct>=100;
-      const barColor=isOver?'#1a8a4a':accentColor;
-      const barPct=Math.min(pct,100);
-      ppto=`<div style="margin-top:8px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-            <span style="font-size:9px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.5px;">Objetivo: ${obj.toLocaleString('es-AR')}</span>
-            <span style="font-size:11px;font-weight:700;color:${isOver?'#1a8a4a':accentColor};">${pct}%</span>
-          </div>
-          <div style="height:5px;border-radius:3px;background:#e0e6f0;overflow:hidden;">
-            <div style="height:100%;width:${barPct}%;background:${barColor};border-radius:3px;transition:width .4s;"></div>
-          </div>
-          <div style="font-size:9px;color:#aaa;margin-top:3px;font-weight:500;">R/Ppto: <strong style="color:${isOver?'#1a8a4a':'#e07b00'};">${pct}%</strong></div>
-        </div>`;
-    }
-    // Special: Cupones (ki=4) — add inversión budget bar
-    if(ki===4){
-      let totalInv=0;
-      DAYS.forEach((_,i)=>{const v=getVal(co,i,INV_KEY);if(v!=='')totalInv+=Number(v);});
-      const budgetPct=CUPON_BUDGET>0?Math.round((totalInv/CUPON_BUDGET)*100):0;
-      const budgetOver=budgetPct>=100;
-      const remaining=Math.max(0,CUPON_BUDGET-totalInv);
-      ppto+=`<div style="margin-top:10px;padding-top:8px;border-top:1px dashed #d0d7e8;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-          <span style="font-size:9px;font-weight:700;color:#D06C2D;text-transform:uppercase;letter-spacing:.5px;">💰 Inversión USD</span>
-          <span style="font-size:11px;font-weight:700;color:${budgetOver?'#c0392b':'#D06C2D'};">${budgetPct}%</span>
-        </div>
-        <div style="height:5px;border-radius:3px;background:#fde8d0;overflow:hidden;">
-          <div style="height:100%;width:${Math.min(budgetPct,100)}%;background:${budgetOver?'#c0392b':'#D06C2D'};border-radius:3px;transition:width .4s;"></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;margin-top:3px;">
-          <span style="font-size:9px;color:#aaa;font-weight:500;">Gastado: <strong style="color:#D06C2D;">USD ${totalInv.toLocaleString('es-AR')}</strong></span>
-          <span style="font-size:9px;color:#aaa;font-weight:500;">Resta: <strong style="color:${budgetOver?'#c0392b':'#1a8a4a'};">USD ${remaining.toLocaleString('es-AR')}</strong></span>
-        </div>
-        <div style="font-size:9px;color:#aaa;margin-top:2px;font-weight:500;">Presupuesto: USD ${CUPON_BUDGET.toLocaleString('es-AR')}</div>
-      </div>`;
-    }
-    return `<div class="kpi-card ${cls}">
-      <div class="kpi-label">${k}</div>
-      <div class="kpi-val">${t.toLocaleString('es-AR')}</div>
-      ${badge}
-      <div class="kpi-sub">acumulado semanal</div>
-      ${ppto}
-    </div>`;
-  }).join('');
-  document.getElementById(co+'-kpis').innerHTML=html;
+// ── DATOS CIBER 26 — ACTUALIZAR AQUÍ CADA DÍA ─────────────────────────────────
+// Índices: 0=Lun1/6, 1=Mar2/6, 2=Mié3/6, 3=Jue4/6, 4=Vie5/6, 5=Sáb6/6, 6=Dom7/6, 7=Lun8/6
+const DATA={
+  jet:{
+    cob:     [null,null,null,null,null,null,null,null],
+    cons:    [null,null,null,null,null,null,null,null],
+    opor:    [null,null,null,null,null,null,null,null],
+    fichas:  [null,null,null,null,null,null,null,null],
+    cupones: [null,null,null,null,null,null,null,null],
+    subs:    [null,null,null,null,null,null,null,null],
+    utilSSV: [null,null,null,null,null,null,null,null],
+    utilCSV: [null,null,null,null,null,null,null,null],
+    sla:     [null,null,null,null,null,null,null,null],
+    // Equipos
+    eq_vacSuc:[null,null,null,null,null,null,null,null],
+    eq_vDigit:[null,null,null,null,null,null,null,null],
+    eq_coRica:[null,null,null,null,null,null,null,null],
+    eq_corp:  [null,null,null,null,null,null,null,null],
+    eq_aero:  [null,null,null,null,null,null,null,null],
+  },
+  tv:{
+    cob:    [null,null,null,null,null,null,null,null],
+    cons:   [null,null,null,null,null,null,null,null],
+    opor:   [null,null,null,null,null,null,null,null],
+    fichas: [null,null,null,null,null,null,null,null],
+    sla:    [null,null,null,null,null,null,null,null],
+  }
+};
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+const sum=arr=>arr.reduce((a,v)=>a+(v??0),0);
+const hasData=arr=>arr.some(v=>v!==null);
+function pct(v,obj){return obj>0?Math.round((v/obj)*100):0;}
+function varPct(actual,hist){if(!hist||!actual)return null;return Math.round(((actual-hist)/hist)*100);}
+function varChip(vp,label){
+  if(vp===null)return'';
+  const cls=vp>0?'pos':vp<0?'neg':'neu';
+  const sign=vp>0?'+':'';
+  return`<span class="hist-chip ${cls}">${label} ${sign}${vp}%</span>`;
 }
-
-function trendArrow(prev,curr){
-  if(prev===''||curr==='')return'';
-  if(Number(curr)>Number(prev))return'<span class="arrow-up">▲</span>';
-  if(Number(curr)<Number(prev))return'<span class="arrow-down">▼</span>';
+function compVar(vp){
+  if(vp===null)return'<td class="var-neu">—</td>';
+  const cls=vp>0?'var-pos':'var-neg';
+  return`<td class="${cls}">${vp>0?'+':''}${vp}%</td>`;
+}
+function fmtN(v){return v!==null?Number(v).toLocaleString('es-AR'):'—';}
+function fmtSLA(v){return v??'—';}
+function slaClass(v){
+  if(!v)return'';
+  const parts=v.split(':');
+  const hrs=parseFloat(parts[0])+(parseFloat(parts[1]||0)/60);
+  if(hrs<=1)return'sla-good';
+  if(hrs<=4)return'sla-warn';
+  return'sla-bad';
+}
+function arrIcon(prev,curr){
+  if(prev===null||curr===null)return'';
+  if(curr>prev)return' <span class="arr-up">▲</span>';
+  if(curr<prev)return' <span class="arr-dn">▼</span>';
   return'';
 }
 
-function buildTable(co){
-  const el=document.getElementById(co+'-table');
-  const head=`<thead><tr><th>KPI</th>${DAYS.map(d=>`<th>${d.l}<br><span style="font-weight:500;opacity:.7">${d.d}</span></th>`).join('')}<th>Total</th></tr></thead>`;
-  const kpiList=getKPIS(co).map((_,i)=>i);
-  const body='<tbody>'+kpiList.map(ki=>{
-    const k=getKPIS(co)[ki];let total=0;
-    const cells=DAYS.map((_,i)=>{const v=getVal(co,i,k);if(v!=='')total+=Number(v);return`<td>${v!==''?Number(v).toLocaleString('es-AR'):'-'}</td>`;}).join('');
-    const totalStr=ki===0?total.toLocaleString('es-AR'):total.toLocaleString('es-AR');
-    return`<tr><td>${k}</td>${cells}<td class="total-cell">${totalStr}</td></tr>`;
-  }).join('')+'</tbody>';
-  el.innerHTML=head+body;
-}
-
-function buildEqTable(){
-  const el=document.getElementById('jet-eq-table');
-  if(!el)return;
-  const co='jet';
-  const head=`<thead><tr><th>Equipo</th>${DAYS.map(d=>`<th>${d.l}<br><span style="font-weight:500;opacity:.7">${d.d}</span></th>`).join('')}<th>Total</th></tr></thead>`;
-  const rows=EQUIPOS.map(eq=>{
-    let total=0;
-    const cells=DAYS.map((_,i)=>{
-      const v=getEqVal(co,i,eq);
-      const prev=i>0?getEqVal(co,i-1,eq):'';
-      const arrow=trendArrow(prev,v);
-      if(v!=='')total+=Number(v);
-      return`<td>${v!==''?Number(v).toLocaleString('es-AR')+arrow:'-'}</td>`;
-    }).join('');
-    return`<tr><td>${eq}</td>${cells}<td class="total-cell">${total.toLocaleString('es-AR')}</td></tr>`;
-  });
-  // Totals row
-  const totalsPerDay=DAYS.map((_,i)=>{
-    let s=0;EQUIPOS.forEach(eq=>{const v=getEqVal(co,i,eq);if(v!=='')s+=Number(v);});return s;
-  });
-  const grandTotal=totalsPerDay.reduce((a,b)=>a+b,0);
-  const totRow=`<tr style="font-weight:700;background:#edf1f9;"><td>Total cobranza</td>${totalsPerDay.map((s,i)=>{
-    const prev=i>0?totalsPerDay[i-1]:null;
-    const arrow=prev!==null?trendArrow(prev===0&&totalsPerDay[i-1]===0?'':prev,s===0?'':s):'';
-    return`<td style="color:#304D85;">${s>0?s.toLocaleString('es-AR')+arrow:'-'}</td>`;
-  }).join('')}<td class="total-cell">${grandTotal.toLocaleString('es-AR')}</td></tr>`;
-  el.innerHTML=head+'<tbody>'+rows.join('')+totRow+'</tbody>';
-}
-
-function buildChart(co,canvasId,legendId,kpisIdx,colorArr){
-  const datasets=kpisIdx.map((ki,j)=>({
-    label:KPIS[ki],
-    data:DAYS.map((_,i)=>{const v=getVal(co,i,KPIS[ki]);return v!==''?Number(v):null;}),
-    borderColor:colorArr[j],backgroundColor:colorArr[j]+'22',
-    borderWidth:2.5,pointRadius:4,pointHoverRadius:6,tension:.35,spanGaps:false,
-    borderDash:j===1?[6,4]:[],
-  }));
-  document.getElementById(legendId).innerHTML=kpisIdx.map((ki,j)=>
-    `<span><span class="legend-dot" style="background:${colorArr[j]}"></span>${KPIS[ki]}</span>`
-  ).join('');
-  const key=co+canvasId;
-  if(charts[key])charts[key].destroy();
-  const ctx=document.getElementById(canvasId).getContext('2d');
-  charts[key]=new Chart(ctx,{type:'line',data:{labels:DAYS.map(d=>d.l+' '+d.d),datasets},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,titleFont:{family:'Montserrat'},bodyFont:{family:'Montserrat'}}},scales:{x:{ticks:{font:{size:10,family:'Montserrat'},autoSkip:false,maxRotation:0},grid:{color:'rgba(180,190,210,.2)'}},y:{beginAtZero:true,ticks:{font:{size:10,family:'Montserrat'}},grid:{color:'rgba(180,190,210,.2)'}}}}});
-}
-
-function renderAll(co){
-  buildKPIs(co);
-  buildTable(co);
-  if(co==='jet')buildEqTable();
-  buildChart(co,co+'-chart1',co+'-legend1',CHART1_KPIS,COLORS[co].chart1);
-  buildChart(co,co+'-chart2',co+'-legend2',CHART2_KPIS,COLORS[co].chart2);
-}
-
-function toggleEqTable(){
-  const sec=document.getElementById('jet-eq-section');
-  const btn=document.getElementById('toggle-jet-eq');
-  const arrow=document.getElementById('jet-eq-arrow');
-  const isOpen=sec.style.display!=='none';
-  sec.style.display=isOpen?'none':'block';
-  btn.classList.toggle('open',!isOpen);
-  arrow.style.transform=isOpen?'':'rotate(180deg)';
-}
-
+// ── TAB ───────────────────────────────────────────────────────────────────────
 function switchTab(co){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
@@ -735,66 +520,336 @@ function switchTab(co){
   document.getElementById('panel-'+co).classList.add('active');
 }
 
-['jet','tv'].forEach(co=>{loadState(co);buildDays(co);buildFields(co);renderAll(co);});
-loadNov();
-
-// close novedades on outside click
-document.addEventListener('click',function(e){
-  const wrap=document.getElementById('toggle-nov').closest('.novedades-wrap');
-  if(!wrap.contains(e.target)){
-    document.getElementById('carga-nov').classList.remove('open');
-    document.getElementById('toggle-nov').classList.remove('open');
-  }
-});
-
-
-
-// ── LOGIN ──────────────────────────────────────────────────────────────────
-const VIEW_PASSWD='Ciberjt2026';
-function doLogin(){
-  const val=document.getElementById('lp-pwd').value;
-  const err=document.getElementById('lp-error');
-  if(val===VIEW_PASSWD){
-    // slide out login, show report
-    const card=document.getElementById('lp-card');
-    card.style.transition='opacity .35s,transform .35s';
-    card.style.opacity='0';
-    card.style.transform='translateY(-20px)';
-    setTimeout(()=>{
-      document.getElementById('page-login').style.display='none';
-      const rep=document.getElementById('page-report');
-      rep.style.display='block';
-      rep.style.opacity='0';
-      rep.style.transition='opacity .4s';
-      setTimeout(()=>rep.style.opacity='1',20);
-    },320);
-    try{sessionStorage.setItem('cjt_auth','1');}catch(e){}
-    err.innerHTML='';
-  } else {
-    err.innerHTML='⚠️ Contraseña incorrecta. Intentá de nuevo.';
-    const card=document.getElementById('lp-card');
-    card.classList.remove('lp-shake');
-    void card.offsetWidth;
-    card.classList.add('lp-shake');
-    document.getElementById('lp-pwd').value='';
-  }
+// ── COLLAPSIBLE ───────────────────────────────────────────────────────────────
+function toggleColl(id){
+  const body=document.getElementById(id);
+  const btn=document.getElementById(id+'-btn');
+  const isOpen=body.classList.contains('open');
+  body.classList.toggle('open',!isOpen);
+  btn.classList.toggle('open',!isOpen);
 }
-function togglePwdVis(){
-  const inp=document.getElementById('lp-pwd');
-  const btn=document.getElementById('lp-eye-btn');
-  if(inp.type==='password'){inp.type='text';btn.textContent='🙈';}
-  else{inp.type='password';btn.textContent='👁';}
+
+// ── KPI CARDS ─────────────────────────────────────────────────────────────────
+function buildKPIs(co){
+  const d=DATA[co];
+  const cls=co==='jet'?'jet-kpi':'tv-kpi';
+  const accent=co==='jet'?'#304D85':'#C23543';
+  const obj=OBJ[co];
+
+  // Totals
+  const totCob=sum(d.cob);
+  const totCons=sum(d.cons);
+  const totOpor=sum(d.opor);
+  const totFichas=sum(d.fichas);
+
+  // Conversion
+  const conv=totCons>0?Math.round((totOpor/totCons)*100):0;
+
+  // Last SLA
+  const lastSLA=[...d.sla].reverse().find(v=>v!==null)??null;
+
+  function progBar(val,target,co){
+    const p=pct(val,target);
+    const isOk=p>=100;
+    const fillCls=isOk?'ok-fill':co==='jet'?'jet-fill':'tv-fill';
+    const pctColor=isOk?'#15803d':co==='jet'?'#1e3566':'#9b1f2c';
+    return`<div class="kpi-progress">
+      <div class="kpi-prog-row">
+        <span class="kpi-prog-label">Obj: ${target.toLocaleString('es-AR')}</span>
+        <span class="kpi-prog-pct" style="color:${pctColor};">${p}%</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill ${fillCls}" style="width:${Math.min(p,100)}%;"></div></div>
+      <div class="kpi-rppto">R/Ppto: <strong style="color:${isOk?'#15803d':'#D06C2D'};">${p}%</strong></div>
+    </div>`;
+  }
+
+  // Historical var chips for jetmar
+  let histCob='',histCons='',histOpor='';
+  if(co==='jet'){
+    histCob=varChip(varPct(totCob,HIST_JET.jun25.cob),'Jun25')+varChip(varPct(totCob,HIST_JET.nov25.cob),'Nov25');
+    histCons=varChip(varPct(totCons,HIST_JET.jun25.cons),'Jun25');
+    histOpor=varChip(varPct(totOpor,HIST_JET.jun25.opor),'Jun25');
+  }
+
+  let html='';
+
+  // Cobranza
+  html+=`<div class="kpi-card ${cls}">
+    <div class="kpi-top"><div class="kpi-label">Cobranza</div><span class="kpi-badge">USD</span></div>
+    <div class="kpi-val">${fmtN(totCob)}</div>
+    <div class="kpi-sub">acumulado semanal</div>
+    ${progBar(totCob,obj.cob,co)}
+    <div class="kpi-hist">${histCob}</div>
+  </div>`;
+
+  // Consultas
+  html+=`<div class="kpi-card ${cls}">
+    <div class="kpi-top"><div class="kpi-label">Consultas</div></div>
+    <div class="kpi-val">${fmtN(totCons)}</div>
+    <div class="kpi-sub">acumulado semanal</div>
+    ${progBar(totCons,obj.cons,co)}
+    <div class="kpi-hist">${histCons}</div>
+  </div>`;
+
+  // Oportunidades
+  html+=`<div class="kpi-card ${cls}">
+    <div class="kpi-top"><div class="kpi-label">Oportunidades</div></div>
+    <div class="kpi-val">${fmtN(totOpor)}</div>
+    <div class="kpi-sub">acumulado semanal</div>
+    ${progBar(totOpor,obj.opor,co)}
+    <div class="kpi-hist">${histOpor}</div>
+  </div>`;
+
+  // Fichas
+  html+=`<div class="kpi-card ${cls}">
+    <div class="kpi-top"><div class="kpi-label">Fichas abiertas</div></div>
+    <div class="kpi-val">${fmtN(totFichas)}</div>
+    <div class="kpi-sub">acumulado semanal</div>
+  </div>`;
+
+  // SLA
+  html+=`<div class="kpi-card ${cls}">
+    <div class="kpi-top"><div class="kpi-label">SLA</div></div>
+    <div class="kpi-val" style="font-size:20px;">${fmtSLA(lastSLA)}</div>
+    <span class="sla-badge ${slaClass(lastSLA)}">${lastSLA?'⏱ '+lastSLA:'Sin datos'}</span>
+    <div class="kpi-sub">último día cargado</div>
+  </div>`;
+
+  if(co==='jet'){
+    const totCup=sum(d.cupones);
+    const totSubs=sum(d.subs);
+    const totSSV=sum(d.utilSSV);
+    const totCSV=sum(d.utilCSV);
+    const subsPct=pct(totSubs,obj.subs);
+    const subsOk=subsPct>=100;
+
+    // Cupones
+    html+=`<div class="kpi-card ${cls}">
+      <div class="kpi-top"><div class="kpi-label">Cupones</div></div>
+      <div class="kpi-val">${fmtN(totCup)}</div>
+      <div class="kpi-sub">acumulado semanal</div>
+    </div>`;
+
+    // Subvención/Inversión
+    html+=`<div class="kpi-card ${cls}">
+      <div class="kpi-top"><div class="kpi-label">Subvención</div><span class="kpi-badge">USD</span></div>
+      <div class="kpi-val">${fmtN(totSubs)}</div>
+      <div class="kpi-sub">presupuesto: USD ${obj.subs.toLocaleString('es-AR')}</div>
+      <div class="kpi-progress">
+        <div class="kpi-prog-row">
+          <span class="kpi-prog-label">Consumido</span>
+          <span class="kpi-prog-pct" style="color:${subsOk?'#dc2626':'#D06C2D'};">${subsPct}%</span>
+        </div>
+        <div class="prog-bar"><div class="prog-fill ${subsOk?'tv-fill':'warn-fill'}" style="width:${Math.min(subsPct,100)}%;"></div></div>
+        <div class="kpi-rppto">Resta: <strong style="color:${subsOk?'#dc2626':'#15803d'};">USD ${Math.max(0,obj.subs-totSubs).toLocaleString('es-AR')}</strong></div>
+      </div>
+    </div>`;
+  }
+
+  document.getElementById(co+'-kpis').innerHTML=html;
+  // Stagger animation on cards
+  setTimeout(()=>{
+    document.querySelectorAll('#'+co+'-kpis .kpi-card').forEach((el,i)=>{
+      el.style.animationDelay=(i*0.07)+'s';
+    });
+  },0);
 }
-// Auto-restore session
-(function(){
-  try{
-    if(sessionStorage.getItem('cjt_auth')==='1'){
-      document.getElementById('page-login').style.display='none';
-      document.getElementById('page-report').style.display='block';
+
+// ── OBJETIVOS DIARIOS ─────────────────────────────────────────────────────────
+function buildObjTable(co){
+  const el=document.getElementById(co+'-obj-table');
+  const d=DATA[co];
+  const objD=co==='jet'?OBJ_DIARIO_JET:OBJ_DIARIO_TV;
+  const head=`<thead><tr><th>Métrica</th>${DAYS.map(dy=>`<th>${dy.l}<br><span style="opacity:1;font-weight:500">${dy.d}</span></th>`).join('')}<th>Total</th></tr></thead>`;
+  let totConsR=0,totConsO=0,totOporR=0,totOporO=0;
+  const consRCells=DAYS.map((_,i)=>{const v=d.cons[i];if(v!==null)totConsR+=v;return`<td>${fmtN(v)}</td>`;}).join('');
+  const consOCells=DAYS.map((_,i)=>{const v=objD.cons[i];totConsO+=v;return`<td style="color:#222;font-style:italic;">${fmtN(v)}</td>`;}).join('');
+  const consVCells=DAYS.map((_,i)=>compVar(varPct(d.cons[i],objD.cons[i]))).join('');
+  const oporRCells=DAYS.map((_,i)=>{const v=d.opor[i];if(v!==null)totOporR+=v;return`<td>${fmtN(v)}</td>`;}).join('');
+  const oporOCells=DAYS.map((_,i)=>{const v=objD.opor[i];totOporO+=v;return`<td style="color:#222;font-style:italic;">${fmtN(v)}</td>`;}).join('');
+  const oporVCells=DAYS.map((_,i)=>compVar(varPct(d.opor[i],objD.opor[i]))).join('');
+  const body=`<tbody>
+    <tr><td>Consultas Real</td>${consRCells}<td class="tot">${fmtN(totConsR)}</td></tr>
+    <tr><td style="color:#222;font-style:italic;">Consultas Obj</td>${consOCells}<td style="color:#222;font-style:italic;">${fmtN(totConsO)}</td></tr>
+    <tr><td>Var Consultas</td>${consVCells}${compVar(varPct(totConsR,totConsO))}</tr>
+    <tr style="border-top:2px solid #eee;"><td>Oportunidades Real</td>${oporRCells}<td class="tot">${fmtN(totOporR)}</td></tr>
+    <tr><td style="color:#222;font-style:italic;">Oportunidades Obj</td>${oporOCells}<td style="color:#222;font-style:italic;">${fmtN(totOporO)}</td></tr>
+    <tr><td>Var Oportunidades</td>${oporVCells}${compVar(varPct(totOporR,totOporO))}</tr>
+  </tbody>`;
+  el.innerHTML=head+body;
+}
+
+// ── TABLA DETALLE ─────────────────────────────────────────────────────────────
+function buildTable(co){
+  const el=document.getElementById(co+'-table');
+  const d=DATA[co];
+  const isJet=co==='jet';
+  const metrics=isJet
+    ?['cob','cons','opor','fichas','cupones','subs','sla']
+    :['cob','cons','opor','fichas','sla'];
+  const labels=isJet
+    ?['Cobranza (USD)','Consultas','Oportunidades','Fichas','Cupones','Subvención (USD)','SLA']
+    :['Cobranza (USD)','Consultas','Oportunidades','Fichas','SLA'];
+  const head=`<thead><tr><th>Métrica</th>${DAYS.map(dy=>`<th>${dy.l}<br><span style="opacity:1;font-weight:500">${dy.d}</span></th>`).join('')}<th>Total</th></tr></thead>`;
+  const body='<tbody>'+metrics.map((k,mi)=>{
+    const arr=d[k];
+    const isSLA=k==='sla';
+    let total=0;
+    const cells=DAYS.map((_,i)=>{
+      const v=arr[i];
+      if(!isSLA&&v!==null)total+=v;
+      return`<td>${isSLA?fmtSLA(v):fmtN(v)}</td>`;
+    }).join('');
+    return`<tr><td>${labels[mi]}</td>${cells}<td class="tot">${isSLA?'—':fmtN(total)}</td></tr>`;
+  }).join('')+'</tbody>';
+  el.innerHTML=head+body;
+}
+
+// ── TABLA EQUIPOS ─────────────────────────────────────────────────────────────
+function buildEqTable(){
+  const el=document.getElementById('jet-eq-table');
+  const d=DATA.jet;
+  const eqs=[
+    {k:'eq_vacSuc',l:'Vacacional Sucursales'},
+    {k:'eq_vDigit',l:'Equipo Venta Digital'},
+    {k:'eq_coRica',l:'Costa Rica'},
+    {k:'eq_corp',l:'Corporativo'},
+    {k:'eq_aero',l:'Aeropuerto'},
+  ];
+  const head=`<thead><tr><th>Equipo</th>${DAYS.map(dy=>`<th>${dy.l} ${dy.d}</th>`).join('')}<th>Total</th></tr></thead>`;
+  const rows=eqs.map(eq=>{
+    let tot=0;
+    const cells=DAYS.map((_,i)=>{
+      const v=d[eq.k][i];
+      const prev=i>0?d[eq.k][i-1]:null;
+      if(v!==null)tot+=v;
+      return`<td>${fmtN(v)}${arrIcon(prev,v)}</td>`;
+    }).join('');
+    return`<tr><td>${eq.l}</td>${cells}<td class="tot">${fmtN(tot)}</td></tr>`;
+  });
+  // Total row
+  const totByDay=DAYS.map((_,i)=>eqs.reduce((s,eq)=>s+(DATA.jet[eq.k][i]??0),0));
+  const grandTot=totByDay.reduce((a,b)=>a+b,0);
+  const totRow=`<tr class="total-row"><td>Total</td>${totByDay.map((v,i)=>{
+    const prev=i>0?totByDay[i-1]:null;
+    return`<td class="tot">${v>0?fmtN(v)+''+arrIcon(prev,v>0?v:null):'—'}</td>`;
+  }).join('')}<td class="tot">${fmtN(grandTot)}</td></tr>`;
+  el.innerHTML=head+'<tbody>'+rows.join('')+totRow+'</tbody>';
+}
+
+// ── CHARTS ────────────────────────────────────────────────────────────────────
+const charts={};
+const COLORS={
+  jet:{c1:['#304D85','#009CDD'],c2:['#D06C2D','#E19AA1']},
+  tv:{c1:['#C23543','#D06C2D'],c2:['#304D85','#009CDD']}
+};
+
+// SLA helpers
+function slaToHrs(v){
+  if(!v)return null;
+  const p=v.split(':');
+  return parseFloat(p[0])+(parseFloat(p[1]||0)/60);
+}
+
+// Custom SLA annotation plugin for c2 charts
+const slaPlugin={
+  id:'slaAnnotations',
+  afterDraw(chart){
+    if(!chart.config._slaData)return;
+    const {ctx,scales,chartArea}=chart;
+    const slaArr=chart.config._slaData;
+    const xScale=scales.x;
+    const yScale=scales.y;
+    ctx.save();
+    slaArr.forEach((v,i)=>{
+      if(v===null)return;
+      const prevV=i>0?slaArr[i-1]:null;
+      const x=xScale.getPixelForValue(i);
+      // Find max y data point at this index to position arrow above chart
+      const yPos=chartArea.top+14;
+      const hrs=slaToHrs(v);
+      const prevHrs=slaToHrs(prevV);
+      // Arrow direction: SLA up (worse) = red up arrow, SLA down (better) = green down arrow
+      let arrow='',color='';
+      if(prevHrs!==null){
+        if(hrs>prevHrs){arrow='▲';color='#c0392b';}
+        else if(hrs<prevHrs){arrow='▼';color='#1a8a4a';}
+      } else {
+        arrow='●';color='#888';
+      }
+      ctx.font='bold 11px Montserrat,Segoe UI,sans-serif';
+      ctx.fillStyle=color;
+      ctx.textAlign='center';
+      ctx.fillText(arrow,x,yPos);
+    });
+    ctx.restore();
+  }
+};
+Chart.register(slaPlugin);
+
+function buildChart(co,canvasId,legId,keys,labels){
+  const colors=COLORS[co][canvasId.includes('c1')?'c1':'c2'];
+  const isSLAChart=canvasId.includes('c2');
+  const slaData=isSLAChart?DATA[co].sla:null;
+
+  const datasets=keys.map((k,j)=>({
+    label:labels[j],
+    data:DAYS.map((_,i)=>DATA[co][k][i]),
+    borderColor:colors[j],backgroundColor:colors[j]+'22',
+    borderWidth:2.5,pointRadius:4,pointHoverRadius:6,
+    tension:.35,spanGaps:false,
+    borderDash:j===1?[6,4]:[],
+  }));
+
+  document.getElementById(legId).innerHTML=
+    labels.map((l,j)=>`<span><span class="ldot" style="background:${colors[j]}"></span>${l}</span>`).join('')+
+    (isSLAChart?'<span><span class="ldot" style="background:#888;"></span>SLA (hover)</span>':'');
+
+  const key=co+canvasId;
+  if(charts[key])charts[key].destroy();
+
+  const config={
+    type:'line',
+    data:{labels:DAYS.map(dy=>dy.l+' '+dy.d),datasets},
+    _slaData: isSLAChart?slaData:null,
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      layout:{padding:{top:24}},
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          mode:'index',intersect:false,
+          callbacks:{
+            afterBody(items){
+              if(!isSLAChart||!slaData)return[];
+              const i=items[0]?.dataIndex;
+              const v=slaData[i];
+              return v?['──────','⏱ SLA: '+v]:[]; 
+            }
+          }
+        }
+      },
+      scales:{
+        x:{ticks:{font:{size:10},autoSkip:false,maxRotation:0},grid:{color:'rgba(180,190,210,.2)'}},
+        y:{beginAtZero:true,ticks:{font:{size:10}},grid:{color:'rgba(180,190,210,.2)'}}
+      }
     }
-  }catch(e){}
-})();
+  };
+  charts[key]=new Chart(document.getElementById(canvasId).getContext('2d'),config);
+}
 
+// ── INIT ──────────────────────────────────────────────────────────────────────
+function renderAll(){
+  ['jet','tv'].forEach(co=>{
+    buildKPIs(co);
+    buildObjTable(co);
+    buildTable(co);
+    buildChart(co,'jet'===co?'jet-c1':'tv-c1',co==='jet'?'jet-leg1':'tv-leg1',['cob','fichas'],['Cobranza (USD)','Fichas abiertas']);
+    buildChart(co,co==='jet'?'jet-c2':'tv-c2',co==='jet'?'jet-leg2':'tv-leg2',['cons','opor'],['Consultas','Oportunidades']);
+  });
+  buildEqTable();
+}
+renderAll();
 </script>
 </body>
 </html>
