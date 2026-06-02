@@ -556,7 +556,6 @@ function buildKPIs(co){
   const totCons=sum(d.cons);
   const totOpor=sum(d.opor);
   const totFichas=sum(d.fichas);
-  const lastSLA=[...d.sla].reverse().find(v=>v!==null)??null;
 
   function progBar(val,target,co){
     const p=pct(val,target);
@@ -643,7 +642,6 @@ function buildKPIs(co){
     <div class="kpi-val">${fmtN(totCons)}</div>
     <div class="kpi-sub">acumulado semanal</div>
     ${progBar(totCons,obj.cons,co)}
-    <div class="kpi-hist">${histCons}</div>
   </div>`;
 
   // 7. OPORTUNIDADES
@@ -652,16 +650,9 @@ function buildKPIs(co){
     <div class="kpi-val">${fmtN(totOpor)}</div>
     <div class="kpi-sub">acumulado semanal</div>
     ${progBar(totOpor,obj.opor,co)}
-    <div class="kpi-hist">${histOpor}</div>
   </div>`;
 
-  // 8. SLA
-  html+=`<div class="kpi-card ${cls}">
-    <div class="kpi-top"><div class="kpi-label">SLA</div></div>
-    <div class="kpi-val" style="font-size:20px;">${fmtSLA(lastSLA)}</div>
-    <span class="sla-badge ${slaClass(lastSLA)}">${lastSLA?'⏱ '+lastSLA:'Sin datos'}</span>
-    <div class="kpi-sub">último día cargado</div>
-  </div>`;
+  // SLA removed from totals — shown in detail table only
 
   if(co==='jet'){
     const totTick=sum(d.resTicket??[]);
