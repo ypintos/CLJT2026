@@ -157,6 +157,10 @@ body{font-family:'Montserrat','Segoe UI',sans-serif;background:#eef1f7;color:#1a
   opacity:.08;
 }
 .jet-kpi{background:linear-gradient(135deg,#edf1f9 0%,#dce4f5 100%);border-color:#8aaad8;}
+.kpi-orange{background:linear-gradient(135deg,#fff3e0 0%,#ffe0b2 100%);border-color:#ffb74d;}
+.kpi-orange::before{background:#D06C2D;}
+.kpi-blue-web{background:linear-gradient(135deg,#e8edf7 0%,#c8d8f0 100%);border-color:#90aed8;}
+.kpi-blue-web::before{background:#1e3566;}
 .jet-kpi::before{background:#304D85;}
 .tv-kpi{background:linear-gradient(135deg,#faeaec 0%,#f5d0d5 100%);border-color:#d87a88;}
 .tv-kpi::before{background:#C23543;}
@@ -348,7 +352,6 @@ td.var-neu{color:#1e293b;}
     <div class="collapsible-wrap">
       <button class="coll-btn" id="jet-det-btn" onclick="toggleColl('jet-det')">📋 Detalle por día <span class="arrow">&#8964;</span></button>
       <div class="coll-body" id="jet-det">
-        <div class="usd-note">* Cobranza, Subvención, Utilidad SSV y CSV expresados en USD.</div>
         <div class="table-wrap"><table id="jet-table"></table></div>
       </div>
     </div>
@@ -365,6 +368,7 @@ td.var-neu{color:#1e293b;}
       <div class="sec-title" style="margin-bottom:6px;">EVOLUCIÓN YTD — COBRANZA Y FICHAS ABIERTAS</div>
       <div class="chart-legend" id="jet-leg1"></div>
       <div style="position:relative;height:200px;"><canvas id="jet-c1"></canvas></div>
+      <div style="font-size:10px;color:#475569;font-style:italic;margin-top:10px;padding-top:8px;border-top:1px dashed #dce4f5;">* Los datos de Ciber anteriores corresponden a los mismos días de semana, no mismos días calendarios.</div>
     </div>
     <div class="chart-section">
       <div class="sec-title" style="margin-bottom:6px;">EVOLUCIÓN YTD — CONSULTAS Y OPORTUNIDADES</div>
@@ -436,8 +440,8 @@ const OBJ={
 };
 // Obj diarios Jetmar [Lun,Mar,Mié,Jue,Vie,Sáb,Dom,Lun]
 const OBJ_DIARIO_JET={
-  cons:[1489,922,602,460,492,391,335,0],
-  opor:[690,427,279,213,228,181,155,0]
+  cons:[1292,1017,730,441,376,343,419,0],
+  opor:[598,471,338,204,174,159,194,0]
 };
 const OBJ_DIARIO_TV={
   cons:[372,269,115,41,55,46,34,0],
@@ -449,33 +453,45 @@ const HIST_JET={
   jun25:{cob:1505368,cons:1848,opor:601,fichas:230,cupones:217,subs:42050,utilSSV:113880,utilCSV:155930},
   nov25:{cob:2743814,cons:null,opor:null,fichas:null,cupones:442,subs:42050,utilSSV:113880,utilCSV:155930}
 };
+// Cobranza diaria histórica por día de semana [Lun,Mar,Mié,Jue,Vie,Sáb,Dom,Lun]
+const HIST_COB_DIARIA={
+  nov25:[421680,535355,657265,514535,479512,53716,47439,400612],
+  jun25:[419434,575482,508427,529628,563565,109684,37594,400494]
+};
 
 // ── DATOS CIBER 26 — ACTUALIZAR AQUÍ CADA DÍA ─────────────────────────────────
 // Índices: 0=Lun1/6, 1=Mar2/6, 2=Mié3/6, 3=Jue4/6, 4=Vie5/6, 5=Sáb6/6, 6=Dom7/6, 7=Lun8/6
 const DATA={
   jet:{
-    cob:     [null,null,null,null,null,null,null,null],
-    cons:    [null,null,null,null,null,null,null,null],
-    opor:    [null,null,null,null,null,null,null,null],
-    fichas:  [null,null,null,null,null,null,null,null],
-    cupones: [null,null,null,null,null,null,null,null],
-    subs:    [null,null,null,null,null,null,null,null],
+    cob:     [476373,null,null,null,null,null,null,null],
+    cons:    [1272,null,null,null,null,null,null,null],
+    opor:    [478,null,null,null,null,null,null,null],
+    fichas:  [294,null,null,null,null,null,null,null],
+    cupones: [76,null,null,null,null,null,null,null],
+    subs:    [7250,null,null,null,null,null,null,null],
     utilSSV: [null,null,null,null,null,null,null,null],
     utilCSV: [null,null,null,null,null,null,null,null],
-    sla:     [null,null,null,null,null,null,null,null],
+    sla:     ["3:02",null,null,null,null,null,null,null],
+    canjesVHS:[75,null,null,null,null,null,null,null],
+    resTicket:[62,null,null,null,null,null,null,null],
+    resPaq:  [69,null,null,null,null,null,null,null],
+    usersWeb:['20.3K',null,null,null,null,null,null,null],
     // Equipos
-    eq_vacSuc:[null,null,null,null,null,null,null,null],
-    eq_vDigit:[null,null,null,null,null,null,null,null],
-    eq_coRica:[null,null,null,null,null,null,null,null],
-    eq_corp:  [null,null,null,null,null,null,null,null],
-    eq_aero:  [null,null,null,null,null,null,null,null],
+    eq_vacSuc:[238077,null,null,null,null,null,null,null],
+    eq_vDigit:[31242,null,null,null,null,null,null,null],
+    eq_coRica:[84709,null,null,null,null,null,null,null],
+    eq_corp:  [109401,null,null,null,null,null,null,null],
+    eq_aero:  [12944,null,null,null,null,null,null,null],
   },
   tv:{
-    cob:    [null,null,null,null,null,null,null,null],
-    cons:   [null,null,null,null,null,null,null,null],
-    opor:   [null,null,null,null,null,null,null,null],
-    fichas: [null,null,null,null,null,null,null,null],
+    cob:    [70522,null,null,null,null,null,null,null],
+    cons:   [544,null,null,null,null,null,null,null],
+    opor:   [207,null,null,null,null,null,null,null],
+    fichas: [56,null,null,null,null,null,null,null],
     sla:    [null,null,null,null,null,null,null,null],
+    resTicket:[10,null,null,null,null,null,null,null],
+    resPaq:  [28,null,null,null,null,null,null,null],
+    usersWeb:['3.6K',null,null,null,null,null,null,null],
   }
 };
 
@@ -536,16 +552,10 @@ function buildKPIs(co){
   const accent=co==='jet'?'#304D85':'#C23543';
   const obj=OBJ[co];
 
-  // Totals
   const totCob=sum(d.cob);
   const totCons=sum(d.cons);
   const totOpor=sum(d.opor);
   const totFichas=sum(d.fichas);
-
-  // Conversion
-  const conv=totCons>0?Math.round((totOpor/totCons)*100):0;
-
-  // Last SLA
   const lastSLA=[...d.sla].reverse().find(v=>v!==null)??null;
 
   function progBar(val,target,co){
@@ -563,7 +573,6 @@ function buildKPIs(co){
     </div>`;
   }
 
-  // Historical var chips for jetmar
   let histCob='',histCons='',histOpor='';
   if(co==='jet'){
     histCob=varChip(varPct(totCob,HIST_JET.jun25.cob),'Jun25')+varChip(varPct(totCob,HIST_JET.nov25.cob),'Nov25');
@@ -573,7 +582,7 @@ function buildKPIs(co){
 
   let html='';
 
-  // Cobranza
+  // 1. COBRANZA
   html+=`<div class="kpi-card ${cls}">
     <div class="kpi-top"><div class="kpi-label">Cobranza</div><span class="kpi-badge">USD</span></div>
     <div class="kpi-val">${fmtN(totCob)}</div>
@@ -582,55 +591,37 @@ function buildKPIs(co){
     <div class="kpi-hist">${histCob}</div>
   </div>`;
 
-  // Consultas
-  html+=`<div class="kpi-card ${cls}">
-    <div class="kpi-top"><div class="kpi-label">Consultas</div></div>
-    <div class="kpi-val">${fmtN(totCons)}</div>
-    <div class="kpi-sub">acumulado semanal</div>
-    ${progBar(totCons,obj.cons,co)}
-    <div class="kpi-hist">${histCons}</div>
-  </div>`;
-
-  // Oportunidades
-  html+=`<div class="kpi-card ${cls}">
-    <div class="kpi-top"><div class="kpi-label">Oportunidades</div></div>
-    <div class="kpi-val">${fmtN(totOpor)}</div>
-    <div class="kpi-sub">acumulado semanal</div>
-    ${progBar(totOpor,obj.opor,co)}
-    <div class="kpi-hist">${histOpor}</div>
-  </div>`;
-
-  // Fichas
+  // 2. FICHAS
   html+=`<div class="kpi-card ${cls}">
     <div class="kpi-top"><div class="kpi-label">Fichas abiertas</div></div>
     <div class="kpi-val">${fmtN(totFichas)}</div>
     <div class="kpi-sub">acumulado semanal</div>
   </div>`;
 
-  // SLA
-  html+=`<div class="kpi-card ${cls}">
-    <div class="kpi-top"><div class="kpi-label">SLA</div></div>
-    <div class="kpi-val" style="font-size:20px;">${fmtSLA(lastSLA)}</div>
-    <span class="sla-badge ${slaClass(lastSLA)}">${lastSLA?'⏱ '+lastSLA:'Sin datos'}</span>
-    <div class="kpi-sub">último día cargado</div>
-  </div>`;
-
   if(co==='jet'){
     const totCup=sum(d.cupones);
     const totSubs=sum(d.subs);
-    const totSSV=sum(d.utilSSV);
-    const totCSV=sum(d.utilCSV);
+    const totCanjes=sum(d.canjesVHS??[]);
+    const totTick=sum(d.resTicket??[]);
+    const totPaq=sum(d.resPaq??[]);
     const subsPct=pct(totSubs,obj.subs);
     const subsOk=subsPct>=100;
 
-    // Cupones
+    // 3. CANJES VOLAR HS
+    html+=`<div class="kpi-card kpi-orange">
+      <div class="kpi-top"><div class="kpi-label" style="color:#7c2d00;">Canjes Volar HS</div></div>
+      <div class="kpi-val" style="color:#7c2d00;">${fmtN(totCanjes)}</div>
+      <div class="kpi-sub">acumulado semanal</div>
+    </div>`;
+
+    // 4. CUPONES
     html+=`<div class="kpi-card ${cls}">
       <div class="kpi-top"><div class="kpi-label">Cupones</div></div>
       <div class="kpi-val">${fmtN(totCup)}</div>
       <div class="kpi-sub">acumulado semanal</div>
     </div>`;
 
-    // Subvención/Inversión
+    // 5. SUBVENCIÓN
     html+=`<div class="kpi-card ${cls}">
       <div class="kpi-top"><div class="kpi-label">Subvención</div><span class="kpi-badge">USD</span></div>
       <div class="kpi-val">${fmtN(totSubs)}</div>
@@ -646,6 +637,40 @@ function buildKPIs(co){
     </div>`;
   }
 
+  // 6. CONSULTAS
+  html+=`<div class="kpi-card ${cls}">
+    <div class="kpi-top"><div class="kpi-label">Consultas</div></div>
+    <div class="kpi-val">${fmtN(totCons)}</div>
+    <div class="kpi-sub">acumulado semanal</div>
+    ${progBar(totCons,obj.cons,co)}
+    <div class="kpi-hist">${histCons}</div>
+  </div>`;
+
+  // 7. OPORTUNIDADES
+  html+=`<div class="kpi-card ${cls}">
+    <div class="kpi-top"><div class="kpi-label">Oportunidades</div></div>
+    <div class="kpi-val">${fmtN(totOpor)}</div>
+    <div class="kpi-sub">acumulado semanal</div>
+    ${progBar(totOpor,obj.opor,co)}
+    <div class="kpi-hist">${histOpor}</div>
+  </div>`;
+
+  // 8. SLA
+  html+=`<div class="kpi-card ${cls}">
+    <div class="kpi-top"><div class="kpi-label">SLA</div></div>
+    <div class="kpi-val" style="font-size:20px;">${fmtSLA(lastSLA)}</div>
+    <span class="sla-badge ${slaClass(lastSLA)}">${lastSLA?'⏱ '+lastSLA:'Sin datos'}</span>
+    <div class="kpi-sub">último día cargado</div>
+  </div>`;
+
+  if(co==='jet'){
+    const totTick=sum(d.resTicket??[]);
+    const totPaq=sum(d.resPaq??[]);
+
+
+
+  }
+
   document.getElementById(co+'-kpis').innerHTML=html;
   // Stagger animation on cards
   setTimeout(()=>{
@@ -654,6 +679,7 @@ function buildKPIs(co){
     });
   },0);
 }
+
 
 // ── OBJETIVOS DIARIOS ─────────────────────────────────────────────────────────
 function buildObjTable(co){
@@ -685,22 +711,26 @@ function buildTable(co){
   const d=DATA[co];
   const isJet=co==='jet';
   const metrics=isJet
-    ?['cob','cons','opor','fichas','cupones','subs','sla']
-    :['cob','cons','opor','fichas','sla'];
+    ?['cob','fichas','canjesVHS','cupones','subs','cons','opor','sla','resTicket','resPaq','usersWeb']
+    :['cob','fichas','cons','opor','sla','resTicket','resPaq','usersWeb'];
   const labels=isJet
-    ?['Cobranza (USD)','Consultas','Oportunidades','Fichas','Cupones','Subvención (USD)','SLA']
-    :['Cobranza (USD)','Consultas','Oportunidades','Fichas','SLA'];
+    ?['Cobranza (USD)','Fichas','Canjes Volar HS','Cupones','Subvención (USD)','Consultas','Oportunidades','SLA','Reservas WEB - Ticket','Reservas WEB - Paquetes','Usuarios activos WEB']
+    :['Cobranza (USD)','Fichas','Consultas','Oportunidades','SLA','Reservas WEB - Ticket','Reservas WEB - Paquetes','Usuarios activos WEB'];
   const head=`<thead><tr><th>Métrica</th>${DAYS.map(dy=>`<th>${dy.l}<br><span style="opacity:1;font-weight:500">${dy.d}</span></th>`).join('')}<th>Total</th></tr></thead>`;
   const body='<tbody>'+metrics.map((k,mi)=>{
     const arr=d[k];
-    const isSLA=k==='sla';
+    const isSLA=k==='sla';const isText=k==='usersWeb';const isNoSum=['sla','usersWeb'].includes(k);
     let total=0;
     const cells=DAYS.map((_,i)=>{
       const v=arr[i];
       if(!isSLA&&v!==null)total+=v;
-      return`<td>${isSLA?fmtSLA(v):fmtN(v)}</td>`;
+      return`<td>${isSLA?fmtSLA(v):isText?(v??'—'):fmtN(v)}</td>`;
     }).join('');
-    return`<tr><td>${labels[mi]}</td>${cells}<td class="tot">${isSLA?'—':fmtN(total)}</td></tr>`;
+    const separatorKeys=isJet?['canjesVHS','cupones','cons','resTicket']:['cons','resTicket'];
+    const separatorColors={canjesVHS:'#ffb74d',cupones:'#b8caea',cons:'#b8caea',resTicket:'#90aed8'};
+    const borderColor=separatorColors[k]||'#dce4f5';
+    const rowStyle=separatorKeys.includes(k)?`border-top:3px solid ${borderColor};`:'';
+    return`<tr style="${rowStyle}"><td>${labels[mi]}</td>${cells}<td class="tot">${(isSLA||isText)?'—':fmtN(total)}</td></tr>`;
   }).join('')+'</tbody>';
   el.innerHTML=head+body;
 }
@@ -790,6 +820,7 @@ Chart.register(slaPlugin);
 function buildChart(co,canvasId,legId,keys,labels){
   const colors=COLORS[co][canvasId.includes('c1')?'c1':'c2'];
   const isSLAChart=canvasId.includes('c2');
+  const isCobChart=canvasId.includes('c1');
   const slaData=isSLAChart?DATA[co].sla:null;
 
   const datasets=keys.map((k,j)=>({
@@ -801,8 +832,34 @@ function buildChart(co,canvasId,legId,keys,labels){
     borderDash:j===1?[6,4]:[],
   }));
 
+  // Add historical cobranza lines for jet c1 chart — only where current data exists
+  if(co==='jet' && isCobChart){
+    const currentCob=DATA.jet.cob;
+    // Filter: only show hist value for days where current data is loaded
+    const nov25data=HIST_COB_DIARIA.nov25.map((v,i)=>currentCob[i]!==null?v:null);
+    const jun25data=HIST_COB_DIARIA.jun25.map((v,i)=>currentCob[i]!==null?v:null);
+    datasets.push({
+      label:'Nov 25',
+      data:nov25data,
+      borderColor:'#D06C2D',backgroundColor:'transparent',
+      borderWidth:1.5,pointRadius:3,pointHoverRadius:5,
+      tension:.35,spanGaps:false,borderDash:[4,3],
+    });
+    datasets.push({
+      label:'Jun 25',
+      data:jun25data,
+      borderColor:'#E19AA1',backgroundColor:'transparent',
+      borderWidth:1.5,pointRadius:3,pointHoverRadius:5,
+      tension:.35,spanGaps:false,borderDash:[4,3],
+    });
+  }
+
+  const extraLegend = (co==='jet'&&isCobChart)
+    ? '<span><span class="ldot" style="background:#D06C2D;opacity:.7;"></span>Nov 25</span><span><span class="ldot" style="background:#E19AA1;opacity:.7;"></span>Jun 25</span>'
+    : '';
   document.getElementById(legId).innerHTML=
     labels.map((l,j)=>`<span><span class="ldot" style="background:${colors[j]}"></span>${l}</span>`).join('')+
+    extraLegend+
     (isSLAChart?'<span><span class="ldot" style="background:#888;"></span>SLA (hover)</span>':'');
 
   const key=co+canvasId;
