@@ -323,9 +323,9 @@ td.var-neu{color:#1e293b;}
       <button class="tab-btn tv" onclick="switchTab('tv')">🏪 Tienda Viajes</button>
     </div>
   </div>
-  <div class="nov-pill">
-  <span class="nov-pill-dot"></span>
-  <span>Datos Actualizados</span>
+  <div class="nov-pill" style="background:linear-gradient(135deg,#ff1a1a 0%,#ff4444 50%,#ff0000 100%);color:#fff;box-shadow:0 3px 16px rgba(255,0,0,.5);">
+  <span class="nov-pill-dot" style="background:#fff;"></span>
+  <span>Datos act al 2/6. FALTA COBRANZA.</span>
 </div>
     </div>
   </div>
@@ -345,6 +345,9 @@ td.var-neu{color:#1e293b;}
     <div class="collapsible-wrap">
       <button class="coll-btn" id="jet-obj-btn" onclick="toggleColl('jet-obj')">📊 Distribución diaria — Consultas y Oportunidades <span class="arrow">&#8964;</span></button>
       <div class="coll-body" id="jet-obj">
+        <div style="background:#fffbe6;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:8px 14px;margin-bottom:12px;font-size:10px;color:#78350f;font-weight:600;line-height:1.5;">
+          ⚠️ <strong>Nota:</strong> Considerar que los datos son oportunidades derivadas en el día que se detalla, no necesariamente significa que la conversación Jetmar/Cliente originó ese día.
+        </div>
         <div class="table-wrap"><table id="jet-obj-table"></table></div>
       </div>
     </div>
@@ -397,6 +400,9 @@ td.var-neu{color:#1e293b;}
     <div class="collapsible-wrap">
       <button class="coll-btn" id="tv-obj-btn" onclick="toggleColl('tv-obj')">📊 Distribución diaria — Consultas y Oportunidades <span class="arrow">&#8964;</span></button>
       <div class="coll-body" id="tv-obj">
+        <div style="background:#fffbe6;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:8px 14px;margin-bottom:12px;font-size:10px;color:#78350f;font-weight:600;line-height:1.5;">
+          ⚠️ <strong>Nota:</strong> Considerar que los datos son oportunidades derivadas en el día que se detalla, no necesariamente significa que la conversación Jetmar/Cliente originó ese día.
+        </div>
         <div class="table-wrap"><table id="tv-obj-table"></table></div>
       </div>
     </div>
@@ -464,18 +470,18 @@ const HIST_COB_DIARIA={
 const DATA={
   jet:{
     cob:     [476373,null,null,null,null,null,null,null],
-    cons:    [1272,null,null,null,null,null,null,null],
-    opor:    [478,null,null,null,null,null,null,null],
+    cons:    [1272,596,null,null,null,null,null,null],
+    opor:    [478,273,null,null,null,null,null,null],
     fichas:  [294,null,null,null,null,null,null,null],
-    cupones: [76,null,null,null,null,null,null,null],
-    subs:    [7250,null,null,null,null,null,null,null],
+    cupones: [76,65,null,null,null,null,null,null],
+    subs:    [7250,5550,null,null,null,null,null,null],
     utilSSV: [null,null,null,null,null,null,null,null],
     utilCSV: [null,null,null,null,null,null,null,null],
-    sla:     ["3:02",null,null,null,null,null,null,null],
-    canjesVHS:[75,null,null,null,null,null,null,null],
-    resTicket:[62,null,null,null,null,null,null,null],
-    resPaq:  [69,null,null,null,null,null,null,null],
-    usersWeb:['20.3K',null,null,null,null,null,null,null],
+    sla:     ["3:02","3:01",null,null,null,null,null,null],
+    canjesVHS:[75,47,null,null,null,null,null,null],
+    resTicket:[62,37,null,null,null,null,null,null],
+    resPaq:  [69,26,null,null,null,null,null,null],
+    usersWeb:['20.3K','12.8K',null,null,null,null,null,null],
     // Equipos
     eq_vacSuc:[238077,null,null,null,null,null,null,null],
     eq_vDigit:[31242,null,null,null,null,null,null,null],
@@ -485,13 +491,13 @@ const DATA={
   },
   tv:{
     cob:    [70522,null,null,null,null,null,null,null],
-    cons:   [544,null,null,null,null,null,null,null],
-    opor:   [207,null,null,null,null,null,null,null],
+    cons:   [544,272,null,null,null,null,null,null],
+    opor:   [207,99,null,null,null,null,null,null],
     fichas: [56,null,null,null,null,null,null,null],
     sla:    [null,null,null,null,null,null,null,null],
-    resTicket:[10,null,null,null,null,null,null,null],
-    resPaq:  [28,null,null,null,null,null,null,null],
-    usersWeb:['3.6K',null,null,null,null,null,null,null],
+    resTicket:[10,13,null,null,null,null,null,null],
+    resPaq:  [28,9,null,null,null,null,null,null],
+    usersWeb:['3.6K','1.9K',null,null,null,null,null,null],
   }
 };
 
