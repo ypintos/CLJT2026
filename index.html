@@ -323,9 +323,9 @@ td.var-neu{color:#1e293b;}
       <button class="tab-btn tv" onclick="switchTab('tv')">🏪 Tienda Viajes</button>
     </div>
   </div>
-  <div class="nov-pill" style="background:linear-gradient(135deg,#ff1a1a 0%,#ff4444 50%,#ff0000 100%);color:#fff;box-shadow:0 3px 16px rgba(255,0,0,.5);">
-  <span class="nov-pill-dot" style="background:#fff;"></span>
-  <span>Datos act al 2/6. FALTA COBRANZA.</span>
+  <div class="nov-pill">
+  <span class="nov-pill-dot"></span>
+  <span>Datos act al 2/6</span>
 </div>
     </div>
   </div>
@@ -349,6 +349,9 @@ td.var-neu{color:#1e293b;}
           ⚠️ <strong>Nota:</strong> Considerar que los datos son oportunidades derivadas en el día que se detalla, no necesariamente significa que la conversación Jetmar/Cliente originó ese día.
         </div>
         <div class="table-wrap"><table id="jet-obj-table"></table></div>
+        <div style="margin-top:18px;">
+          <div class="table-wrap"><table id="jet-tel-table"></table></div>
+        </div>
       </div>
     </div>
 
@@ -469,10 +472,17 @@ const HIST_COB_DIARIA={
 // Índices: 0=Lun1/6, 1=Mar2/6, 2=Mié3/6, 3=Jue4/6, 4=Vie5/6, 5=Sáb6/6, 6=Dom7/6, 7=Lun8/6
 const DATA={
   jet:{
-    cob:     [476373,null,null,null,null,null,null,null],
+    cob:     [476373,628272,null,null,null,null,null,null],
+    // cons / opor = preventa + telefono combinados (para gráficos y totales generales)
     cons:    [1272,596,null,null,null,null,null,null],
     opor:    [478,273,null,null,null,null,null,null],
-    fichas:  [294,null,null,null,null,null,null,null],
+    // Preventa separada
+    consPrev:[null,469,null,null,null,null,null,null],
+    oporPrev:[null,247,null,null,null,null,null,null],
+    // Teléfono separada
+    consTel: [null,127,null,null,null,null,null,null],
+    oporTel: [null,26,null,null,null,null,null,null],
+    fichas:  [294,339,null,null,null,null,null,null],
     cupones: [76,65,null,null,null,null,null,null],
     subs:    [7250,5550,null,null,null,null,null,null],
     utilSSV: [null,null,null,null,null,null,null,null],
@@ -483,17 +493,17 @@ const DATA={
     resPaq:  [69,26,null,null,null,null,null,null],
     usersWeb:['20.3K','12.8K',null,null,null,null,null,null],
     // Equipos
-    eq_vacSuc:[238077,null,null,null,null,null,null,null],
-    eq_vDigit:[31242,null,null,null,null,null,null,null],
-    eq_coRica:[84709,null,null,null,null,null,null,null],
-    eq_corp:  [109401,null,null,null,null,null,null,null],
-    eq_aero:  [12944,null,null,null,null,null,null,null],
+    eq_vacSuc:[238077,361324,null,null,null,null,null,null],
+    eq_vDigit:[31242,108151,null,null,null,null,null,null],
+    eq_coRica:[84709,86471,null,null,null,null,null,null],
+    eq_corp:  [109401,50598,null,null,null,null,null,null],
+    eq_aero:  [12944,21728,null,null,null,null,null,null],
   },
   tv:{
-    cob:    [70522,null,null,null,null,null,null,null],
+    cob:    [70522,102968,null,null,null,null,null,null],
     cons:   [544,272,null,null,null,null,null,null],
     opor:   [207,99,null,null,null,null,null,null],
-    fichas: [56,null,null,null,null,null,null,null],
+    fichas: [56,72,null,null,null,null,null,null],
     sla:    [null,null,null,null,null,null,null,null],
     resTicket:[10,13,null,null,null,null,null,null],
     resPaq:  [28,9,null,null,null,null,null,null],
@@ -642,30 +652,50 @@ function buildKPIs(co){
     </div>`;
   }
 
-  // 6. CONSULTAS
-  html+=`<div class="kpi-card ${cls}">
-    <div class="kpi-top"><div class="kpi-label">Consultas</div></div>
-    <div class="kpi-val">${fmtN(totCons)}</div>
-    <div class="kpi-sub">acumulado semanal</div>
-    ${progBar(totCons,obj.cons,co)}
-  </div>`;
-
-  // 7. OPORTUNIDADES
-  html+=`<div class="kpi-card ${cls}">
-    <div class="kpi-top"><div class="kpi-label">Oportunidades</div></div>
-    <div class="kpi-val">${fmtN(totOpor)}</div>
-    <div class="kpi-sub">acumulado semanal</div>
-    ${progBar(totOpor,obj.opor,co)}
-  </div>`;
-
-  // SLA removed from totals — shown in detail table only
-
+  // 6. CONSULTAS PREVENTA
   if(co==='jet'){
-    const totTick=sum(d.resTicket??[]);
-    const totPaq=sum(d.resPaq??[]);
-
-
-
+    const totConsPrev=sum(d.consPrev??[]);
+    const totOporPrev=sum(d.oporPrev??[]);
+    const totConsTel=sum(d.consTel??[]);
+    const totOporTel=sum(d.oporTel??[]);
+    html+=`<div class="kpi-card ${cls}">
+      <div class="kpi-top"><div class="kpi-label">Consultas Preventa</div><span class="kpi-badge">PREV</span></div>
+      <div class="kpi-val">${fmtN(totConsPrev)}</div>
+      <div class="kpi-sub">acumulado semanal</div>
+      ${progBar(totCons,obj.cons,co)}
+      <div class="kpi-hist">${histCons}</div>
+    </div>`;
+    html+=`<div class="kpi-card ${cls}">
+      <div class="kpi-top"><div class="kpi-label">Oportunidades Preventa</div><span class="kpi-badge">PREV</span></div>
+      <div class="kpi-val">${fmtN(totOporPrev)}</div>
+      <div class="kpi-sub">acumulado semanal</div>
+      ${progBar(totOpor,obj.opor,co)}
+      <div class="kpi-hist">${histOpor}</div>
+    </div>`;
+    html+=`<div class="kpi-card kpi-blue-web">
+      <div class="kpi-top"><div class="kpi-label" style="color:#1e3566;">Consultas Teléfono</div><span class="kpi-badge" style="background:linear-gradient(135deg,#1e3566,#304D85);">TEL</span></div>
+      <div class="kpi-val" style="color:#1e3566;">${fmtN(totConsTel)}</div>
+      <div class="kpi-sub">acumulado semanal</div>
+    </div>`;
+    html+=`<div class="kpi-card kpi-blue-web">
+      <div class="kpi-top"><div class="kpi-label" style="color:#1e3566;">Oportunidades Teléfono</div><span class="kpi-badge" style="background:linear-gradient(135deg,#1e3566,#304D85);">TEL</span></div>
+      <div class="kpi-val" style="color:#1e3566;">${fmtN(totOporTel)}</div>
+      <div class="kpi-sub">acumulado semanal</div>
+    </div>`;
+  } else {
+    // TV: consultas/oportunidades sin separación
+    html+=`<div class="kpi-card ${cls}">
+      <div class="kpi-top"><div class="kpi-label">Consultas</div></div>
+      <div class="kpi-val">${fmtN(totCons)}</div>
+      <div class="kpi-sub">acumulado semanal</div>
+      ${progBar(totCons,obj.cons,co)}
+    </div>`;
+    html+=`<div class="kpi-card ${cls}">
+      <div class="kpi-top"><div class="kpi-label">Oportunidades</div></div>
+      <div class="kpi-val">${fmtN(totOpor)}</div>
+      <div class="kpi-sub">acumulado semanal</div>
+      ${progBar(totOpor,obj.opor,co)}
+    </div>`;
   }
 
   document.getElementById(co+'-kpis').innerHTML=html;
@@ -683,15 +713,21 @@ function buildObjTable(co){
   const el=document.getElementById(co+'-obj-table');
   const d=DATA[co];
   const objD=co==='jet'?OBJ_DIARIO_JET:OBJ_DIARIO_TV;
-  const head=`<thead><tr><th>Métrica</th>${DAYS.map(dy=>`<th>${dy.l}<br><span style="opacity:1;font-weight:500">${dy.d}</span></th>`).join('')}<th>Total</th></tr></thead>`;
+  const isJet=co==='jet';
+
+  // Para Jetmar usamos consPrev/oporPrev vs objetivo; si null usamos cons/opor (día 1 sin separación)
+  const consArr=isJet?(d.consPrev??d.cons):d.cons;
+  const oporArr=isJet?(d.oporPrev??d.opor):d.opor;
+
+  const headPrev=`<thead><tr><th>Métrica Preventa</th>${DAYS.map(dy=>`<th>${dy.l}<br><span style="opacity:1;font-weight:500">${dy.d}</span></th>`).join('')}<th>Total</th></tr></thead>`;
   let totConsR=0,totConsO=0,totOporR=0,totOporO=0;
-  const consRCells=DAYS.map((_,i)=>{const v=d.cons[i];if(v!==null)totConsR+=v;return`<td>${fmtN(v)}</td>`;}).join('');
+  const consRCells=DAYS.map((_,i)=>{const v=consArr[i];if(v!==null)totConsR+=v;return`<td>${fmtN(v)}</td>`;}).join('');
   const consOCells=DAYS.map((_,i)=>{const v=objD.cons[i];totConsO+=v;return`<td style="color:#222;font-style:italic;">${fmtN(v)}</td>`;}).join('');
-  const consVCells=DAYS.map((_,i)=>compVar(varPct(d.cons[i],objD.cons[i]))).join('');
-  const oporRCells=DAYS.map((_,i)=>{const v=d.opor[i];if(v!==null)totOporR+=v;return`<td>${fmtN(v)}</td>`;}).join('');
+  const consVCells=DAYS.map((_,i)=>compVar(varPct(consArr[i],objD.cons[i]))).join('');
+  const oporRCells=DAYS.map((_,i)=>{const v=oporArr[i];if(v!==null)totOporR+=v;return`<td>${fmtN(v)}</td>`;}).join('');
   const oporOCells=DAYS.map((_,i)=>{const v=objD.opor[i];totOporO+=v;return`<td style="color:#222;font-style:italic;">${fmtN(v)}</td>`;}).join('');
-  const oporVCells=DAYS.map((_,i)=>compVar(varPct(d.opor[i],objD.opor[i]))).join('');
-  const body=`<tbody>
+  const oporVCells=DAYS.map((_,i)=>compVar(varPct(oporArr[i],objD.opor[i]))).join('');
+  const bodyPrev=`<tbody>
     <tr><td>Consultas Real</td>${consRCells}<td class="tot">${fmtN(totConsR)}</td></tr>
     <tr><td style="color:#222;font-style:italic;">Consultas Obj</td>${consOCells}<td style="color:#222;font-style:italic;">${fmtN(totConsO)}</td></tr>
     <tr><td>Var Consultas</td>${consVCells}${compVar(varPct(totConsR,totConsO))}</tr>
@@ -699,7 +735,23 @@ function buildObjTable(co){
     <tr><td style="color:#222;font-style:italic;">Oportunidades Obj</td>${oporOCells}<td style="color:#222;font-style:italic;">${fmtN(totOporO)}</td></tr>
     <tr><td>Var Oportunidades</td>${oporVCells}${compVar(varPct(totOporR,totOporO))}</tr>
   </tbody>`;
-  el.innerHTML=head+body;
+  el.innerHTML=headPrev+bodyPrev;
+
+  // Tabla adicional de Teléfono (solo Jetmar)
+  if(isJet){
+    const elTel=document.getElementById('jet-tel-table');
+    if(elTel){
+      const headTel=`<thead><tr><th>Métrica Teléfono</th>${DAYS.map(dy=>`<th>${dy.l}<br><span style="opacity:1;font-weight:500">${dy.d}</span></th>`).join('')}<th>Total</th></tr></thead>`;
+      let totCT=0,totOT=0;
+      const ctCells=DAYS.map((_,i)=>{const v=d.consTel[i]??null;if(v!==null)totCT+=v;return`<td>${fmtN(v)}</td>`;}).join('');
+      const otCells=DAYS.map((_,i)=>{const v=d.oporTel[i]??null;if(v!==null)totOT+=v;return`<td>${fmtN(v)}</td>`;}).join('');
+      const bodyTel=`<tbody>
+        <tr><td>Consultas Teléfono</td>${ctCells}<td class="tot">${fmtN(totCT)}</td></tr>
+        <tr style="border-top:2px solid #eee;"><td>Oportunidades Teléfono</td>${otCells}<td class="tot">${fmtN(totOT)}</td></tr>
+      </tbody>`;
+      elTel.innerHTML=headTel+bodyTel;
+    }
+  }
 }
 
 // ── TABLA DETALLE ─────────────────────────────────────────────────────────────
