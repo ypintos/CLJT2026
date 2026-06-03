@@ -477,8 +477,8 @@ const DATA={
     cons:    [1272,596,null,null,null,null,null,null],
     opor:    [478,273,null,null,null,null,null,null],
     // Preventa separada
-    consPrev:[null,469,null,null,null,null,null,null],
-    oporPrev:[null,247,null,null,null,null,null,null],
+    consPrev:[1272,469,null,null,null,null,null,null],
+    oporPrev:[478,247,null,null,null,null,null,null],
     // Teléfono separada
     consTel: [null,127,null,null,null,null,null,null],
     oporTel: [null,26,null,null,null,null,null,null],
@@ -760,11 +760,11 @@ function buildTable(co){
   const d=DATA[co];
   const isJet=co==='jet';
   const metrics=isJet
-    ?['cob','fichas','canjesVHS','cupones','subs','cons','opor','sla','resTicket','resPaq','usersWeb']
-    :['cob','fichas','cons','opor','sla','resTicket','resPaq','usersWeb'];
+    ?['cob','fichas','canjesVHS','cupones','subs','resTicket','resPaq','usersWeb']
+    :['cob','fichas','resTicket','resPaq','usersWeb'];
   const labels=isJet
-    ?['Cobranza (USD)','Fichas','Canjes Volar HS','Cupones','Subvención (USD)','Consultas','Oportunidades','SLA','Reservas WEB - Ticket','Reservas WEB - Paquetes','Usuarios activos WEB']
-    :['Cobranza (USD)','Fichas','Consultas','Oportunidades','SLA','Reservas WEB - Ticket','Reservas WEB - Paquetes','Usuarios activos WEB'];
+    ?['Cobranza (USD)','Fichas','Canjes Volar HS','Cupones','Subvención (USD)','Reservas WEB - Ticket','Reservas WEB - Paquetes','Usuarios activos WEB']
+    :['Cobranza (USD)','Fichas','Reservas WEB - Ticket','Reservas WEB - Paquetes','Usuarios activos WEB'];
   const head=`<thead><tr><th>Métrica</th>${DAYS.map(dy=>`<th>${dy.l}<br><span style="opacity:1;font-weight:500">${dy.d}</span></th>`).join('')}<th>Total</th></tr></thead>`;
   const body='<tbody>'+metrics.map((k,mi)=>{
     const arr=d[k];
@@ -775,8 +775,8 @@ function buildTable(co){
       if(!isSLA&&v!==null)total+=v;
       return`<td>${isSLA?fmtSLA(v):isText?(v??'—'):fmtN(v)}</td>`;
     }).join('');
-    const separatorKeys=isJet?['canjesVHS','cupones','cons','resTicket']:['cons','resTicket'];
-    const separatorColors={canjesVHS:'#ffb74d',cupones:'#b8caea',cons:'#b8caea',resTicket:'#90aed8'};
+    const separatorKeys=isJet?['canjesVHS','cupones','resTicket']:['resTicket'];
+    const separatorColors={canjesVHS:'#ffb74d',cupones:'#b8caea',resTicket:'#90aed8'};
     const borderColor=separatorColors[k]||'#dce4f5';
     const rowStyle=separatorKeys.includes(k)?`border-top:3px solid ${borderColor};`:'';
     return`<tr style="${rowStyle}"><td>${labels[mi]}</td>${cells}<td class="tot">${(isSLA||isText)?'—':fmtN(total)}</td></tr>`;
