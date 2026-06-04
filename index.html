@@ -264,8 +264,8 @@ tr.total-row td{background:linear-gradient(180deg,#edf1f9,#dce4f5);font-weight:7
 tbody tr{transition:background .15s;}
 .jet tbody tr:hover td{background:#edf1f9;}
 .tv tbody tr:hover td{background:#faeaec;}
-.arr-up{color:#dc2626;font-weight:700;}
-.arr-dn{color:#15803d;font-weight:700;}
+.arr-up{color:#15803d;font-weight:700;}
+.arr-dn{color:#dc2626;font-weight:700;}
 td.var-pos{color:#15803d;font-weight:700;}
 td.var-neg{color:#dc2626;font-weight:700;}
 td.var-neu{color:#1e293b;}
@@ -325,7 +325,7 @@ td.var-neu{color:#1e293b;}
   </div>
   <div class="nov-pill">
   <span class="nov-pill-dot"></span>
-  <span>Datos act al 2/6</span>
+  <span>Datos act al 3/6</span>
 </div>
     </div>
   </div>
@@ -358,7 +358,11 @@ td.var-neu{color:#1e293b;}
     <div class="collapsible-wrap">
       <button class="coll-btn" id="jet-det-btn" onclick="toggleColl('jet-det')">📋 Detalle por día <span class="arrow">&#8964;</span></button>
       <div class="coll-body" id="jet-det">
+        <div class="usd-note">* Cobranza expresada en USD.</div>
         <div class="table-wrap"><table id="jet-table"></table></div>
+        <div style="margin-top:10px;font-size:9.5px;color:#94a3b8;font-style:italic;line-height:1.5;border-top:1px solid #e2e8f4;padding-top:8px;">
+          📌 Los siguientes datos corresponden a los casos considerados oportunidades y derivados a vendedores. Para abordar otra apertura ver reporte de Gaia.
+        </div>
       </div>
     </div>
 
@@ -380,6 +384,9 @@ td.var-neu{color:#1e293b;}
       <div class="sec-title" style="margin-bottom:6px;">EVOLUCIÓN YTD — CONSULTAS Y OPORTUNIDADES</div>
       <div class="chart-legend" id="jet-leg2"></div>
       <div style="position:relative;height:200px;"><canvas id="jet-c2"></canvas></div>
+      <div style="margin-top:10px;font-size:9.5px;color:#64748b;font-style:italic;line-height:1.5;border-top:1px solid #e2e8f4;padding-top:8px;">
+        ⚠️ Considerar que en ediciones anteriores la estrategia fue derivar tráfico a la web.
+      </div>
     </div>
 
     <div class="footer-note">
@@ -415,6 +422,9 @@ td.var-neu{color:#1e293b;}
       <div class="coll-body" id="tv-det">
         <div class="usd-note">* Cobranza expresada en USD.</div>
         <div class="table-wrap"><table id="tv-table"></table></div>
+        <div style="margin-top:10px;font-size:9.5px;color:#94a3b8;font-style:italic;line-height:1.5;border-top:1px solid #e2e8f4;padding-top:8px;">
+          📌 Todos los casos son derivados a vendedor.
+        </div>
       </div>
     </div>
 
@@ -444,7 +454,7 @@ const DAYS=[{l:'Lun',d:'1/6'},{l:'Mar',d:'2/6'},{l:'Mié',d:'3/6'},{l:'Jue',d:'4
 
 // ── OBJETIVOS ─────────────────────────────────────────────────────────────────
 const OBJ={
-  jet:{cob:3700000,cons:4653,opor:2156,subs:16000},
+  jet:{cob:3700000,cons:4653,opor:2156,subs:20000},
   tv:{cob:720000,cons:990,opor:500}
 };
 // Obj diarios Jetmar [Lun,Mar,Mié,Jue,Vie,Sáb,Dom,Lun]
@@ -472,42 +482,42 @@ const HIST_COB_DIARIA={
 // Índices: 0=Lun1/6, 1=Mar2/6, 2=Mié3/6, 3=Jue4/6, 4=Vie5/6, 5=Sáb6/6, 6=Dom7/6, 7=Lun8/6
 const DATA={
   jet:{
-    cob:     [476373,628272,null,null,null,null,null,null],
+    cob:     [498954,634038,577049,null,null,null,null,null],
     // cons / opor = preventa + telefono combinados (para gráficos y totales generales)
-    cons:    [1272,596,null,null,null,null,null,null],
-    opor:    [478,273,null,null,null,null,null,null],
+    cons:    [1420,596,512,null,null,null,null,null],
+    opor:    [526,273,193,null,null,null,null,null],
     // Preventa separada
-    consPrev:[1272,469,null,null,null,null,null,null],
-    oporPrev:[478,247,null,null,null,null,null,null],
+    consPrev:[1286,469,394,null,null,null,null,null],
+    oporPrev:[478,247,172,null,null,null,null,null],
     // Teléfono separada
-    consTel: [null,127,null,null,null,null,null,null],
-    oporTel: [null,26,null,null,null,null,null,null],
-    fichas:  [294,339,null,null,null,null,null,null],
-    cupones: [76,65,null,null,null,null,null,null],
-    subs:    [7250,5550,null,null,null,null,null,null],
+    consTel: [134,127,118,null,null,null,null,null],
+    oporTel: [48,26,21,null,null,null,null,null],
+    fichas:  [294,339,303,null,null,null,null,null],
+    cupones: [76,65,72,null,null,null,null,null],
+    subs:    [7250,5550,6550,null,null,null,null,null],
     utilSSV: [null,null,null,null,null,null,null,null],
     utilCSV: [null,null,null,null,null,null,null,null],
     sla:     ["3:02","3:01",null,null,null,null,null,null],
-    canjesVHS:[75,47,null,null,null,null,null,null],
-    resTicket:[62,37,null,null,null,null,null,null],
-    resPaq:  [69,26,null,null,null,null,null,null],
-    usersWeb:['20.3K','12.8K',null,null,null,null,null,null],
+    canjesVHS:[75,47,67,null,null,null,null,null],
+    resTicket:[64,52,47,null,null,null,null,null],
+    resPaq:  [35,22,19,null,null,null,null,null],
+    usersWeb:['20.3K','12.8K','8.1K',null,null,null,null,null],
     // Equipos
-    eq_vacSuc:[238077,361324,null,null,null,null,null,null],
-    eq_vDigit:[31242,108151,null,null,null,null,null,null],
-    eq_coRica:[84709,86471,null,null,null,null,null,null],
-    eq_corp:  [109401,50598,null,null,null,null,null,null],
-    eq_aero:  [12944,21728,null,null,null,null,null,null],
+    eq_vacSuc:[251209,363216,336632,null,null,null,null,null],
+    eq_vDigit:[37487,110861,79119,null,null,null,null,null],
+    eq_coRica:[84709,87636,70502,null,null,null,null,null],
+    eq_corp:  [111810,50598,57683,null,null,null,null,null],
+    eq_aero:  [13739,21728,33113,null,null,null,null,null],
   },
   tv:{
-    cob:    [70522,102968,null,null,null,null,null,null],
-    cons:   [544,272,null,null,null,null,null,null],
-    opor:   [207,99,null,null,null,null,null,null],
-    fichas: [56,72,null,null,null,null,null,null],
+    cob:    [98792,107306,129436,null,null,null,null,null],
+    cons:   [544,272,249,null,null,null,null,null],
+    opor:   [207,99,70,null,null,null,null,null],
+    fichas: [56,72,65,null,null,null,null,null],
     sla:    [null,null,null,null,null,null,null,null],
-    resTicket:[10,13,null,null,null,null,null,null],
-    resPaq:  [28,9,null,null,null,null,null,null],
-    usersWeb:['3.6K','1.9K',null,null,null,null,null,null],
+    resTicket:[14,13,11,null,null,null,null,null],
+    resPaq:  [28,9,9,null,null,null,null,null],
+    usersWeb:['3.6K','1.9K','1.3K',null,null,null,null,null],
   }
 };
 
