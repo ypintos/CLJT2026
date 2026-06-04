@@ -600,9 +600,13 @@ function buildKPIs(co){
 
   let histCob='',histCons='',histOpor='';
   if(co==='jet'){
-    histCob=varChip(varPct(totCob,HIST_JET.jun25.cob),'Jun25')+varChip(varPct(totCob,HIST_JET.nov25.cob),'Nov25');
-    histCons=varChip(varPct(totCons,HIST_JET.jun25.cons),'Jun25');
-    histOpor=varChip(varPct(totOpor,HIST_JET.jun25.opor),'Jun25');
+    // Cobranza: comparar contra los mismos N días de cada edición anterior
+    const nDays=d.cob.filter(v=>v!==null).length;
+    const histCobJun25=HIST_COB_DIARIA.jun25.slice(0,nDays).reduce((a,b)=>a+b,0);
+    const histCobNov25=HIST_COB_DIARIA.nov25.slice(0,nDays).reduce((a,b)=>a+b,0);
+    histCob=varChip(varPct(totCob,histCobJun25),'Jun25')+varChip(varPct(totCob,histCobNov25),'Nov25');
+    histCons=''; // Sin comparación histórica para consultas preventa
+    histOpor=''; // Sin comparación histórica para oportunidades preventa
   }
 
   let html='';
