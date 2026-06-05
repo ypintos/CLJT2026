@@ -325,7 +325,7 @@ td.var-neu{color:#1e293b;}
   </div>
   <div class="nov-pill">
   <span class="nov-pill-dot"></span>
-  <span>Datos act al 3/6</span>
+  <span>Datos act al 4/6</span>
 </div>
     </div>
   </div>
@@ -474,50 +474,46 @@ const HIST_JET={
 };
 // Cobranza diaria histórica por día de semana [Lun,Mar,Mié,Jue,Vie,Sáb,Dom,Lun]
 const HIST_COB_DIARIA={
-  nov25:[421680,535355,657265,514535,479512,53716,47439,400612],
-  jun25:[419434,575482,508427,529628,563565,109684,37594,400494]
+  nov25:[452171,574065,704790,399703,514184,57600,50869,429579],
+  jun25:[484499,664753,587297,307372,650988,126699,43426,462621]
 };
 
 // ── DATOS CIBER 26 — ACTUALIZAR AQUÍ CADA DÍA ─────────────────────────────────
 // Índices: 0=Lun1/6, 1=Mar2/6, 2=Mié3/6, 3=Jue4/6, 4=Vie5/6, 5=Sáb6/6, 6=Dom7/6, 7=Lun8/6
 const DATA={
   jet:{
-    cob:     [498954,634038,577049,null,null,null,null,null],
-    // cons / opor = preventa + telefono combinados (para gráficos y totales generales)
-    cons:    [1420,596,512,null,null,null,null,null],
-    opor:    [526,273,193,null,null,null,null,null],
-    // Preventa separada
-    consPrev:[1286,469,394,null,null,null,null,null],
-    oporPrev:[478,247,172,null,null,null,null,null],
-    // Teléfono separada
-    consTel: [134,127,118,null,null,null,null,null],
-    oporTel: [48,26,21,null,null,null,null,null],
-    fichas:  [294,339,303,null,null,null,null,null],
-    cupones: [76,65,72,null,null,null,null,null],
-    subs:    [7250,5550,6550,null,null,null,null,null],
+    cob:     [498124,627444,584524,497343,null,null,null,null],
+    cons:    [1420,596,512,649,null,null,null,null],
+    opor:    [526,273,193,201,null,null,null,null],
+    consPrev:[1286,469,394,559,null,null,null,null],
+    oporPrev:[478,247,172,181,null,null,null,null],
+    consTel: [134,127,118,90,null,null,null,null],
+    oporTel: [48,26,21,20,null,null,null,null],
+    fichas:  [294,339,303,227,null,null,null,null],
+    cupones: [76,66,72,6,null,null,null,null],
+    subs:    [7250,5650,6550,550,null,null,null,null],
     utilSSV: [null,null,null,null,null,null,null,null],
     utilCSV: [null,null,null,null,null,null,null,null],
-    sla:     ["3:02","3:01",null,null,null,null,null,null],
-    canjesVHS:[75,47,67,null,null,null,null,null],
-    resTicket:[64,52,47,null,null,null,null,null],
-    resPaq:  [35,22,19,null,null,null,null,null],
-    usersWeb:['20.3K','12.8K','8.1K',null,null,null,null,null],
-    // Equipos
-    eq_vacSuc:[251209,363216,336632,null,null,null,null,null],
-    eq_vDigit:[37487,110861,79119,null,null,null,null,null],
-    eq_coRica:[84709,87636,70502,null,null,null,null,null],
-    eq_corp:  [111810,50598,57683,null,null,null,null,null],
-    eq_aero:  [13739,21728,33113,null,null,null,null,null],
+    sla:     ["3:02","3:01",null,"1:22",null,null,null,null],
+    canjesVHS:[75,47,67,23,null,null,null,null],
+    resTicket:[64,52,47,23,null,null,null,null],
+    resPaq:  [35,22,19,7,null,null,null,null],
+    usersWeb:['20.3K','12.8K','8.1K','6.9K',null,null,null,null],
+    eq_vacSuc:[250379,356622,340578,296818,null,null,null,null],
+    eq_vDigit:[37487,110861,79967,58510,null,null,null,null],
+    eq_coRica:[84709,87636,72502,63844,null,null,null,null],
+    eq_corp:  [111810,50598,58364,64186,null,null,null,null],
+    eq_aero:  [13739,21728,33113,13985,null,null,null,null],
   },
   tv:{
-    cob:    [98792,107306,129436,null,null,null,null,null],
-    cons:   [544,272,249,null,null,null,null,null],
-    opor:   [207,99,70,null,null,null,null,null],
-    fichas: [56,72,65,null,null,null,null,null],
+    cob:    [98792,107306,132335,106092,null,null,null,null],
+    cons:   [544,272,249,270,null,null,null,null],
+    opor:   [207,99,70,81,null,null,null,null],
+    fichas: [56,72,65,50,null,null,null,null],
     sla:    [null,null,null,null,null,null,null,null],
-    resTicket:[14,13,11,null,null,null,null,null],
-    resPaq:  [28,9,9,null,null,null,null,null],
-    usersWeb:['3.6K','1.9K','1.3K',null,null,null,null,null],
+    resTicket:[14,13,11,2,null,null,null,null],
+    resPaq:  [28,9,9,13,null,null,null,null],
+    usersWeb:['3.6K','1.9K','1.3K','915',null,null,null,null],
   }
 };
 
@@ -828,6 +824,10 @@ function buildEqTable(){
     return`<td class="tot">${v>0?fmtN(v)+''+arrIcon(prev,v>0?v:null):'—'}</td>`;
   }).join('')}<td class="tot">${fmtN(grandTot)}</td></tr>`;
   el.innerHTML=head+'<tbody>'+rows.join('')+totRow+'</tbody>';
+  // Disclaimer
+  let disc=el.parentElement.querySelector('.eq-disclaimer');
+  if(!disc){disc=document.createElement('div');disc.className='eq-disclaimer';disc.style.cssText='margin-top:8px;font-size:9.5px;color:#94a3b8;font-style:italic;line-height:1.5;border-top:1px solid #e2e8f4;padding-top:8px;';el.parentElement.appendChild(disc);}
+  disc.textContent='📌 Debido a los reprocesos de las bases de datos, pueden ocurrir diferencias mínimas en los resultados debido al impacto de los documentos.';
 }
 
 // ── CHARTS ────────────────────────────────────────────────────────────────────
