@@ -323,9 +323,9 @@ td.var-neu{color:#1e293b;}
       <button class="tab-btn tv" onclick="switchTab('tv')">🏪 Tienda Viajes</button>
     </div>
   </div>
-  <div class="nov-pill">
-  <span class="nov-pill-dot"></span>
-  <span>Datos act al 4/6</span>
+  <div class="nov-pill" style="background:linear-gradient(135deg,#ff1a1a 0%,#ff4444 50%,#ff0000 100%);color:#fff;box-shadow:0 3px 16px rgba(255,0,0,.5);">
+  <span class="nov-pill-dot" style="background:#fff;"></span>
+  <span>Datos act al 7/6. FALTA: Cobranza D5-D7, Fichas D5-D7, Equipos D5-D7, Tel. D6-D7 (Jet), Cobranza+Fichas D5-D7 (Tienda)</span>
 </div>
     </div>
   </div>
@@ -486,22 +486,22 @@ const HIST_COB_DIARIA={
 const DATA={
   jet:{
     cob:     [498124,627444,584524,497343,null,null,null,null],
-    cons:    [1420,596,512,649,null,null,null,null],
-    opor:    [526,273,193,201,null,null,null,null],
-    consPrev:[1286,469,394,559,null,null,null,null],
-    oporPrev:[478,247,172,181,null,null,null,null],
-    consTel: [134,127,118,90,null,null,null,null],
-    oporTel: [48,26,21,20,null,null,null,null],
+    cons:    [1420,596,512,649,504,354,124,null],
+    opor:    [526,273,193,201,187,110,29,null],
+    consPrev:[1286,469,394,559,437,354,124,null],
+    oporPrev:[478,247,172,181,170,110,29,null],
+    consTel: [134,127,118,90,67,null,null,null],
+    oporTel: [48,26,21,20,17,null,null,null],
     fichas:  [294,339,303,227,null,null,null,null],
-    cupones: [76,66,72,6,null,null,null,null],
-    subs:    [7250,5650,6550,550,null,null,null,null],
+    cupones: [76,66,72,6,0,0,0,null],
+    subs:    [7250,5650,6550,550,0,0,0,null],
     utilSSV: [null,null,null,null,null,null,null,null],
     utilCSV: [null,null,null,null,null,null,null,null],
-    sla:     ["3:02","3:01",null,"1:22",null,null,null,null],
-    canjesVHS:[75,47,67,23,null,null,null,null],
-    resTicket:[64,52,47,23,null,null,null,null],
-    resPaq:  [35,22,19,7,null,null,null,null],
-    usersWeb:['20.3K','12.8K','8.1K','6.9K',null,null,null,null],
+    sla:     ["3:02","3:01",null,"1:22","3:14","3:38","2:06",null],
+    canjesVHS:[75,47,67,23,20,25,39,null],
+    resTicket:[64,52,47,23,15,6,5,null],
+    resPaq:  [35,22,19,7,4,5,2,null],
+    usersWeb:['20.3K','12.8K','8.1K','6.9K','6039','6234','8203',null],
     eq_vacSuc:[250379,356622,340578,296818,null,null,null,null],
     eq_vDigit:[37487,110861,79967,58510,null,null,null,null],
     eq_coRica:[84709,87636,72502,63844,null,null,null,null],
@@ -510,13 +510,13 @@ const DATA={
   },
   tv:{
     cob:    [98792,107306,132335,106092,null,null,null,null],
-    cons:   [544,272,249,270,null,null,null,null],
-    opor:   [207,99,70,81,null,null,null,null],
+    cons:   [544,272,249,270,223,117,145,null],
+    opor:   [207,99,70,81,69,34,23,null],
     fichas: [56,72,65,50,null,null,null,null],
     sla:    [null,null,null,null,null,null,null,null],
-    resTicket:[14,13,11,2,null,null,null,null],
-    resPaq:  [28,9,9,13,null,null,null,null],
-    usersWeb:['3.6K','1.9K','1.3K','915',null,null,null,null],
+    resTicket:[14,13,11,2,4,4,1,null],
+    resPaq:  [28,9,9,13,3,3,0,null],
+    usersWeb:['3.6K','1.9K','1.3K','915','547','458','509',null],
   }
 };
 
