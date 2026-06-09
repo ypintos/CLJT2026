@@ -141,7 +141,7 @@ body{font-family:'Montserrat','Segoe UI',sans-serif;background:#eef1f7;color:#1a
 .tv .sec-title::before{background:linear-gradient(180deg,#C23543,#e84057);}
 
 /* ── KPI CARDS ── */
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:28px;}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:28px;}
 .kpi-card{
   border-radius:14px;padding:16px 17px;
   border:1.5px solid transparent;
@@ -323,9 +323,9 @@ td.var-neu{color:#1e293b;}
       <button class="tab-btn tv" onclick="switchTab('tv')">🏪 Tienda Viajes</button>
     </div>
   </div>
-  <div class="nov-pill" style="background:linear-gradient(135deg,#ff1a1a 0%,#ff4444 50%,#ff0000 100%);color:#fff;box-shadow:0 3px 16px rgba(255,0,0,.5);">
-  <span class="nov-pill-dot" style="background:#fff;"></span>
-  <span>Datos al 8/6. ATENCIÓN ¡! COBRANZAS EN REVISIÓN</span>
+  <div class="nov-pill">
+  <span class="nov-pill-dot"></span>
+  <span>Datos act al 8/6</span>
 </div>
     </div>
   </div>
@@ -392,7 +392,6 @@ td.var-neu{color:#1e293b;}
     <div class="collapsible-wrap">
       <button class="coll-btn" id="jet-mkt-btn" onclick="toggleColl('jet-mkt')">📣 Marketing <span class="arrow">&#8964;</span></button>
       <div class="coll-body" id="jet-mkt">
-        <!-- KPIs principales -->
         <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;">
           <div style="background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff;border-radius:12px;padding:18px 24px;flex:1;min-width:140px;text-align:center;">
             <div style="font-size:10px;opacity:.8;font-weight:600;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;">Total Inversión USD</div>
@@ -405,50 +404,28 @@ td.var-neu{color:#1e293b;}
             <div style="font-size:9px;opacity:.7;margin-top:4px;">acumulado semanal</div>
           </div>
         </div>
-        <!-- Tablas independientes lado a lado -->
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px;">
-          <!-- Inversión por canal -->
           <div>
             <div style="background:#1e3a8a;color:#fff;padding:8px 12px;border-radius:8px 8px 0 0;font-size:11px;font-weight:700;">Inversión por canal (USD)</div>
             <table style="width:100%;border-collapse:collapse;font-size:12px;border:1px solid #e2e8f0;border-top:none;">
               <tbody>
-                <tr style="border-bottom:1px solid #e2e8f0;">
-                  <td style="padding:7px 12px;">Meta</td>
-                  <td style="padding:7px 12px;text-align:right;font-weight:700;color:#1e3a8a;">$2.053,0</td>
-                </tr>
-                <tr style="border-bottom:1px solid #e2e8f0;background:#f8fafc;">
-                  <td style="padding:7px 12px;">Google</td>
-                  <td style="padding:7px 12px;text-align:right;font-weight:700;color:#1e3a8a;">$2.456,0</td>
-                </tr>
-                <tr style="border-bottom:1px solid #e2e8f0;">
-                  <td style="padding:7px 12px;">WhatsApp</td>
-                  <td style="padding:7px 12px;text-align:right;font-weight:700;color:#1e3a8a;">$250,0</td>
-                </tr>
-                <tr style="background:#f8fafc;">
-                  <td style="padding:7px 12px;">CEDU</td>
-                  <td style="padding:7px 12px;text-align:right;font-weight:700;color:#1e3a8a;">$4.343,2</td>
-                </tr>
+                <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:7px 12px;">Meta</td><td style="padding:7px 12px;text-align:right;font-weight:700;color:#1e3a8a;">$2.053,0</td></tr>
+                <tr style="border-bottom:1px solid #e2e8f0;background:#f8fafc;"><td style="padding:7px 12px;">Google</td><td style="padding:7px 12px;text-align:right;font-weight:700;color:#1e3a8a;">$2.456,0</td></tr>
+                <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:7px 12px;">WhatsApp</td><td style="padding:7px 12px;text-align:right;font-weight:700;color:#1e3a8a;">$250,0</td></tr>
+                <tr style="background:#f8fafc;"><td style="padding:7px 12px;">CEDU</td><td style="padding:7px 12px;text-align:right;font-weight:700;color:#1e3a8a;">$4.343,2</td></tr>
               </tbody>
             </table>
           </div>
-          <!-- Consultas por tipo -->
           <div>
             <div style="background:#065f46;color:#fff;padding:8px 12px;border-radius:8px 8px 0 0;font-size:11px;font-weight:700;">Consultas por tipo</div>
             <table style="width:100%;border-collapse:collapse;font-size:12px;border:1px solid #e2e8f0;border-top:none;">
               <tbody>
-                <tr style="border-bottom:1px solid #e2e8f0;">
-                  <td style="padding:7px 12px;">Pauta</td>
-                  <td style="padding:7px 12px;text-align:right;font-weight:700;color:#065f46;">1.962</td>
-                </tr>
-                <tr style="background:#f8fafc;">
-                  <td style="padding:7px 12px;">Orgánica</td>
-                  <td style="padding:7px 12px;text-align:right;font-weight:700;color:#065f46;">1.931</td>
-                </tr>
+                <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:7px 12px;">Pauta</td><td style="padding:7px 12px;text-align:right;font-weight:700;color:#065f46;">1.962</td></tr>
+                <tr style="background:#f8fafc;"><td style="padding:7px 12px;">Orgánica</td><td style="padding:7px 12px;text-align:right;font-weight:700;color:#065f46;">1.931</td></tr>
               </tbody>
             </table>
           </div>
         </div>
-        <!-- Disclaimer -->
         <div style="background:#f0f9ff;border-left:4px solid #0284c7;border-radius:0 8px 8px 0;padding:8px 14px;font-size:10px;color:#0c4a6e;font-weight:600;line-height:1.5;">
           📌 Las consultas generadas se derivan a los canales <strong>WhatsApp</strong> y <strong>Mail</strong>.
         </div>
@@ -469,6 +446,8 @@ td.var-neu{color:#1e293b;}
     </div>
   </div>
 </div>
+
+<!-- ===== TIENDA ===== -->
 <div id="panel-tv" class="panel tv-bg tv">
   <div class="panel-header">
     <h2>Tienda Viajes</h2>
@@ -541,8 +520,8 @@ const OBJ_DIARIO_TV={
 
 // ── HISTÓRICOS JETMAR (Ciber Jun 25 y Nov 25) ─────────────────────────────────
 const HIST_JET={
-  jun25:{cob:1505368,cons:1848,opor:601,fichas:230,cupones:217,subs:42050,utilSSV:113880,utilCSV:155930},
-  nov25:{cob:2743814,cons:null,opor:null,fichas:null,cupones:442,subs:42050,utilSSV:113880,utilCSV:155930}
+  jun25:{cob:1505368,cons:1848,opor:601,fichas:1478,cupones:208,subs:19200,utilSSV:113880,utilCSV:155930},
+  nov25:{cob:2743814,cons:null,opor:null,fichas:1406,cupones:442,subs:42050,utilSSV:113880,utilCSV:155930}
 };
 // Cobranza diaria histórica por día de semana [Lun,Mar,Mié,Jue,Vie,Sáb,Dom,Lun]
 // FUENTE OFICIAL — tabla "Cobranzas Nov-25 / Jun-25" (imagen de referencia)
@@ -564,7 +543,7 @@ const DATA={
     oporPrev:[478,247,172,181,170,110,29,61],
     consTel: [134,127,118,90,67,null,null,95],
     oporTel: [48,26,21,20,17,null,null,16],
-    fichas:  [294,339,303,227,null,null,null,null],
+    fichas:  [320,305,305,220,199,59,49,202],
     cupones: [76,66,72,6,0,0,0,0],
     subs:    [7250,5650,6550,550,0,0,0,0],
     utilSSV: [null,null,null,null,null,null,null,null],
@@ -584,12 +563,32 @@ const DATA={
     cob:    [98792,107306,132335,106092,77847,4480,2720,57268],
     cons:   [544,272,249,270,223,117,145,129],
     opor:   [207,99,70,81,69,34,23,43],
-    fichas: [56,72,65,50,null,null,null,null],
+    fichas: [57,71,67,48,20,12,7,24],
     sla:    [null,null,null,null,null,null,null,null],
     resTicket:[14,13,11,2,4,4,1,4],
     resPaq:  [28,9,9,13,3,3,0,3],
     usersWeb:['3.6K','1.9K','1.3K','915','547','458','509','533'],
   }
+};
+
+// ── HISTÓRICOS TIENDA VIAJES ──────────────────────────────────────────────────
+// Fuente: imagen tabla cobros y fichas Ciber Lunes
+const HIST_TV={
+  jun25:{
+    cob:     607935,
+    cobDia:  [98792,107306,132335,127187,77847,4480,2720,57268],  // Jun26 es el actual; Jun25 usa mismos días
+    cobDiaHist:[83812,88762,133203,84372,129251,17708,14019,48295],
+    fichas:  306,
+    fichasDia:[47,54,57,38,32,8,13,21],
+  },
+  nov25:{
+    cob:     417490,
+    cobDiaHist:[45814,85949,61857,68721,60016,29430,4966,60736],
+    fichas:  191,
+    fichasDia:[30,34,39,31,20,16,4,17],
+  },
+  jun24:{cobDiaHist:[90631,108967,93523,87752,46510,29057,15759,74098]},
+  nov24:{cobDiaHist:[55465,100659,104156,88947,33407,29346,26734,26489]},
 };
 
 // ── HELPERS ───────────────────────────────────────────────────────────────────
@@ -676,8 +675,14 @@ function buildKPIs(co){
     const histCobJun25=HIST_COB_DIARIA.jun25.slice(0,nDays).reduce((a,b)=>a+b,0);
     const histCobNov25=HIST_COB_DIARIA.nov25.slice(0,nDays).reduce((a,b)=>a+b,0);
     histCob=varChip(varPct(totCob,histCobJun25),'Jun25')+varChip(varPct(totCob,histCobNov25),'Nov25');
-    histCons=''; // Sin comparación histórica para consultas preventa
-    histOpor=''; // Sin comparación histórica para oportunidades preventa
+    histCons='';
+    histOpor='';
+  } else {
+    // TV: comparar cobranza y fichas contra ediciones anteriores (mismos N días)
+    const nDays=d.cob.filter(v=>v!==null).length;
+    const tvCobJun25=HIST_TV.jun25.cobDiaHist.slice(0,nDays).reduce((a,b)=>a+b,0);
+    const tvCobNov25=HIST_TV.nov25.cobDiaHist.slice(0,nDays).reduce((a,b)=>a+b,0);
+    histCob=varChip(varPct(totCob,tvCobJun25),'Jun25')+varChip(varPct(totCob,tvCobNov25),'Nov25');
   }
 
   let html='';
@@ -696,6 +701,13 @@ function buildKPIs(co){
     <div class="kpi-top"><div class="kpi-label">Fichas abiertas</div></div>
     <div class="kpi-val">${fmtN(totFichas)}</div>
     <div class="kpi-sub">acumulado semanal</div>
+    ${co==='jet'?`<div class="kpi-hist">
+      ${varChip(varPct(totFichas,HIST_JET.jun25.fichas),'Jun25')}
+      ${varChip(varPct(totFichas,HIST_JET.nov25.fichas),'Nov25')}
+    </div>`:`<div class="kpi-hist">
+      ${varChip(varPct(totFichas,HIST_TV.jun25.fichas),'Jun25')}
+      ${varChip(varPct(totFichas,HIST_TV.nov25.fichas),'Nov25')}
+    </div>`}
   </div>`;
 
   if(co==='jet'){
@@ -719,6 +731,10 @@ function buildKPIs(co){
       <div class="kpi-top"><div class="kpi-label">Cupones</div></div>
       <div class="kpi-val">${fmtN(totCup)}</div>
       <div class="kpi-sub">acumulado semanal</div>
+      <div class="kpi-hist">
+        ${varChip(varPct(totCup,HIST_JET.jun25.cupones),'Jun25')}
+        ${varChip(varPct(totCup,HIST_JET.nov25.cupones),'Nov25')}
+      </div>
     </div>`;
 
     // 5. SUBVENCIÓN
@@ -734,39 +750,59 @@ function buildKPIs(co){
         <div class="prog-bar"><div class="prog-fill ${subsOk?'tv-fill':'warn-fill'}" style="width:${Math.min(subsPct,100)}%;"></div></div>
         <div class="kpi-rppto">Resta: <strong style="color:${subsOk?'#dc2626':'#15803d'};">USD ${Math.max(0,obj.subs-totSubs).toLocaleString('es-AR')}</strong></div>
       </div>
+      <div class="kpi-hist" style="margin-top:6px;">
+        ${varChip(varPct(totSubs,HIST_JET.jun25.subs),'Jun25')}
+        ${varChip(varPct(totSubs,HIST_JET.nov25.subs),'Nov25')}
+      </div>
     </div>`;
   }
 
-  // 6. CONSULTAS PREVENTA
+  // 6. DETALLE POR CANAL
   if(co==='jet'){
-    const totConsPrev=sum(d.consPrev??[]);
-    const totOporPrev=sum(d.oporPrev??[]);
-    const totConsTel=sum(d.consTel??[]);
-    const totOporTel=sum(d.oporTel??[]);
-    html+=`<div class="kpi-card ${cls}">
-      <div class="kpi-top"><div class="kpi-label">Consultas Preventa</div><span class="kpi-badge">PREV</span></div>
-      <div class="kpi-val">${fmtN(totConsPrev)}</div>
-      <div class="kpi-sub">acumulado semanal</div>
-      ${progBar(totCons,obj.cons,co)}
-      <div class="kpi-hist">${histCons}</div>
-    </div>`;
-    html+=`<div class="kpi-card ${cls}">
-      <div class="kpi-top"><div class="kpi-label">Oportunidades Preventa</div><span class="kpi-badge">PREV</span></div>
-      <div class="kpi-val">${fmtN(totOporPrev)}</div>
-      <div class="kpi-sub">acumulado semanal</div>
-      ${progBar(totOpor,obj.opor,co)}
-      <div class="kpi-hist">${histOpor}</div>
-    </div>`;
-    html+=`<div class="kpi-card kpi-blue-web">
-      <div class="kpi-top"><div class="kpi-label" style="color:#1e3566;">Consultas Teléfono</div><span class="kpi-badge" style="background:linear-gradient(135deg,#1e3566,#304D85);">TEL</span></div>
-      <div class="kpi-val" style="color:#1e3566;">${fmtN(totConsTel)}</div>
-      <div class="kpi-sub">acumulado semanal</div>
-    </div>`;
-    html+=`<div class="kpi-card kpi-blue-web">
-      <div class="kpi-top"><div class="kpi-label" style="color:#1e3566;">Oportunidades Teléfono</div><span class="kpi-badge" style="background:linear-gradient(135deg,#1e3566,#304D85);">TEL</span></div>
-      <div class="kpi-val" style="color:#1e3566;">${fmtN(totOporTel)}</div>
-      <div class="kpi-sub">acumulado semanal</div>
-    </div>`;
+    const cReal=s=>CANAL[s].cons.reduce((a,b)=>a+(b??0),0);
+    const oReal=s=>CANAL[s].opor.reduce((a,b)=>a+(b??0),0);
+    const cObj =s=>CANAL[s].objCons.reduce((a,b)=>a+(b??0),0);
+    const oObj =s=>CANAL[s].objOpor.reduce((a,b)=>a+(b??0),0);
+    const canalDef=[
+      {key:'total',   label:'Total canales',badge:'TOT',color:'#304D85',light:'#e8edf7'},
+      {key:'whatsapp',label:'WhatsApp',     badge:'WA', color:'#16a34a',light:'#dcfce7'},
+      {key:'paqweb',  label:'PAQ WEB',      badge:'WEB',color:'#0284c7',light:'#e0f2fe'},
+      {key:'llamadas',label:'Teléfono',     badge:'TEL',color:'#7c3aed',light:'#ede9fe'},
+    ];
+    canalDef.forEach(({key,label,badge,color,light})=>{
+      const cr=cReal(key),co2=cObj(key),orv=oReal(key),oo=oObj(key);
+      const cPct=co2>0?Math.round(cr/co2*100):null;
+      const oPct=oo>0?Math.round(orv/oo*100):null;
+      const miniBar=(real,objV,p)=>p!==null?`
+        <div style="margin-top:5px;">
+          <div style="display:flex;justify-content:space-between;font-size:9px;color:#64748b;margin-bottom:2px;">
+            <span>Obj: ${fmtN(objV)}</span>
+            <span style="color:${p>=100?'#15803d':color};font-weight:700;">${p}%</span>
+          </div>
+          <div style="background:#e2e8f0;border-radius:99px;height:5px;">
+            <div style="background:${color};width:${Math.min(p,100)}%;height:5px;border-radius:99px;"></div>
+          </div>
+        </div>`:'';
+      html+=`<div class="kpi-card" style="border-left:4px solid ${color};background:linear-gradient(135deg,#fff 70%,${light});">
+        <div class="kpi-top">
+          <div class="kpi-label" style="color:${color};">${label}</div>
+          <span class="kpi-badge" style="background:${color};">${badge}</span>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:6px;">
+          <div style="flex:1;">
+            <div style="font-size:9px;color:#64748b;font-weight:600;text-transform:uppercase;margin-bottom:2px;">Consultas</div>
+            <div style="font-size:20px;font-weight:800;color:${color};">${fmtN(cr)}</div>
+            ${miniBar(cr,co2,cPct)}
+          </div>
+          <div style="width:1px;background:#e2e8f0;"></div>
+          <div style="flex:1;">
+            <div style="font-size:9px;color:#64748b;font-weight:600;text-transform:uppercase;margin-bottom:2px;">Oportunidades</div>
+            <div style="font-size:20px;font-weight:800;color:${color};">${fmtN(orv)}</div>
+            ${miniBar(orv,oo,oPct)}
+          </div>
+        </div>
+      </div>`;
+    });
   } else {
     // TV: consultas/oportunidades sin separación
     html+=`<div class="kpi-card ${cls}">
@@ -880,7 +916,7 @@ function buildObjTable(co){
 // ── CANJES VOLAR HS ───────────────────────────────────────────────────────────
 // Fuente: tabla oficial — [Lun1/6,Mar2/6,Mié3/6,Jue4/6,Vie5/6,Sáb6/6,Dom7/6,Lun8/6]
 const VOLAR={
-  canjes:[75,47,67,23,20,25,38,25],
+  canjes:[75,47,67,23,20,25,39,25],
   cob:   [47156,47587,56681,36303,29614,586,4349,68476],
 };
 
@@ -888,7 +924,7 @@ function buildVolarSection(){
   const totCanjes=VOLAR.canjes.reduce((a,b)=>a+b,0);
   const totCobVolar=VOLAR.cob.reduce((a,b)=>a+b,0);
   const totCobJet=DATA.jet.cob.reduce((a,b)=>a+(b??0),0);
-  const pct=totCobJet>0?((totCobVolar/totCobJet)*100).toFixed(1):'—';
+  const pct2=totCobJet>0?((totCobVolar/totCobJet)*100).toFixed(1):'—';
 
   const kpiEl=document.getElementById('jet-volar-kpis');
   if(kpiEl){
@@ -905,7 +941,7 @@ function buildVolarSection(){
       </div>
       <div style="background:linear-gradient(135deg,#9a3412,#c2410c);color:#fff;border-radius:12px;padding:14px 20px;min-width:140px;text-align:center;flex:1;">
         <div style="font-size:10px;opacity:.85;margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">% del total Ciber</div>
-        <div style="font-size:26px;font-weight:800;">${pct}%</div>
+        <div style="font-size:26px;font-weight:800;">${pct2}%</div>
         <div style="font-size:9px;opacity:.8;">sobre cobranza Jetmar</div>
       </div>`;
   }
@@ -924,10 +960,11 @@ function buildVolarSection(){
     if(!jetDay||!VOLAR.cob[i])return`<td>—</td>`;
     return`<td>${((VOLAR.cob[i]/jetDay)*100).toFixed(1)}%</td>`;
   }).join('');
+  const totCobVolarFmt='$'+totCobVolar.toLocaleString('es-AR');
   const body=`<tbody>
     <tr><td><strong>Canjes</strong></td>${canjesCells}<td class="tot">${totCanjes}</td></tr>
-    <tr><td><strong>Cobranza USD</strong></td>${cobCells}<td class="tot">$${totCobVolar.toLocaleString('es-AR')}</td></tr>
-    <tr><td style="color:#6b7280;font-style:italic;">% del total cobranza</td>${pctCells}<td style="color:#ea580c;font-weight:700;">${pct}%</td></tr>
+    <tr><td><strong>Cobranza USD</strong></td>${cobCells}<td class="tot">${totCobVolarFmt}</td></tr>
+    <tr><td style="color:#6b7280;font-style:italic;">% del total cobranza</td>${pctCells}<td style="color:#ea580c;font-weight:700;">${pct2}%</td></tr>
   </tbody>`;
   el.innerHTML=head+body;
 }
@@ -973,11 +1010,8 @@ function buildEqTable(){
     {k:'eq_corp',l:'Corporativo'},
     {k:'eq_aero',l:'Aeropuerto'},
   ];
-  const head=`<thead><tr><th>Equipo</th>${DAYS.map(dy=>`<th>${dy.l} ${dy.d}</th>`).join('')}<th>Total</th><th style="background:#304D85;color:#fff;border-radius:0 6px 0 0;">Share</th></tr></thead>`;
-  // Calcular grand total para shares
-  const eqTotals=eqs.map(eq=>d[eq.k].reduce((s,v)=>s+(v??0),0));
-  const grandTot=eqTotals.reduce((a,b)=>a+b,0);
-  const rows=eqs.map((eq,ei)=>{
+  const head=`<thead><tr><th>Equipo</th>${DAYS.map(dy=>`<th>${dy.l} ${dy.d}</th>`).join('')}<th>Total</th></tr></thead>`;
+  const rows=eqs.map(eq=>{
     let tot=0;
     const cells=DAYS.map((_,i)=>{
       const v=d[eq.k][i];
@@ -985,15 +1019,15 @@ function buildEqTable(){
       if(v!==null)tot+=v;
       return`<td>${fmtN(v)}${arrIcon(prev,v)}</td>`;
     }).join('');
-    const share=grandTot>0?((eqTotals[ei]/grandTot)*100).toFixed(1):'—';
-    return`<tr><td>${eq.l}</td>${cells}<td class="tot">${fmtN(tot)}</td><td style="text-align:center;font-weight:700;color:#304D85;">${share}%</td></tr>`;
+    return`<tr><td>${eq.l}</td>${cells}<td class="tot">${fmtN(tot)}</td></tr>`;
   });
   // Total row
   const totByDay=DAYS.map((_,i)=>eqs.reduce((s,eq)=>s+(DATA.jet[eq.k][i]??0),0));
+  const grandTot=totByDay.reduce((a,b)=>a+b,0);
   const totRow=`<tr class="total-row"><td>Total</td>${totByDay.map((v,i)=>{
     const prev=i>0?totByDay[i-1]:null;
     return`<td class="tot">${v>0?fmtN(v)+''+arrIcon(prev,v>0?v:null):'—'}</td>`;
-  }).join('')}<td class="tot">${fmtN(grandTot)}</td><td style="text-align:center;font-weight:700;color:#304D85;">100%</td></tr>`;
+  }).join('')}<td class="tot">${fmtN(grandTot)}</td></tr>`;
   el.innerHTML=head+'<tbody>'+rows.join('')+totRow+'</tbody>';
   // Disclaimer
   let disc=el.parentElement.querySelector('.eq-disclaimer');
