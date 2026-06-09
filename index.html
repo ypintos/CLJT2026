@@ -560,7 +560,7 @@ const DATA={
     eq_aero:  [13739,21728,33113,13985,16731,3467,1206,20784],
   },
   tv:{
-    cob:    [98792,107306,132335,106092,77847,4480,2720,57268],
+    cob:    [98792,107306,132335,127187,77847,4480,2720,57268],
     cons:   [544,272,249,270,223,117,145,129],
     opor:   [207,99,70,81,69,34,23,43],
     fichas: [57,71,67,48,20,12,7,24],
@@ -1103,26 +1103,42 @@ function buildChart(co,canvasId,legId,keys,labels){
   // Add historical cobranza lines for jet c1 chart — only where current data exists
   if(co==='jet' && isCobChart){
     const currentCob=DATA.jet.cob;
-    // Filter: only show hist value for days where current data is loaded
     const nov25data=HIST_COB_DIARIA.nov25.map((v,i)=>currentCob[i]!==null?v:null);
     const jun25data=HIST_COB_DIARIA.jun25.map((v,i)=>currentCob[i]!==null?v:null);
     datasets.push({
-      label:'Nov 25',
-      data:nov25data,
+      label:'Nov 25',data:nov25data,
       borderColor:'#D06C2D',backgroundColor:'transparent',
       borderWidth:1.5,pointRadius:3,pointHoverRadius:5,
       tension:.35,spanGaps:false,borderDash:[4,3],
     });
     datasets.push({
-      label:'Jun 25',
-      data:jun25data,
+      label:'Jun 25',data:jun25data,
       borderColor:'#E19AA1',backgroundColor:'transparent',
       borderWidth:1.5,pointRadius:3,pointHoverRadius:5,
       tension:.35,spanGaps:false,borderDash:[4,3],
     });
   }
 
-  const extraLegend = (co==='jet'&&isCobChart)
+  // Add historical cobranza lines for tv c1 chart
+  if(co==='tv' && isCobChart){
+    const currentCob=DATA.tv.cob;
+    const nov25data=HIST_TV.nov25.cobDiaHist.map((v,i)=>currentCob[i]!==null?v:null);
+    const jun25data=HIST_TV.jun25.cobDiaHist.map((v,i)=>currentCob[i]!==null?v:null);
+    datasets.push({
+      label:'Nov 25',data:nov25data,
+      borderColor:'#D06C2D',backgroundColor:'transparent',
+      borderWidth:1.5,pointRadius:3,pointHoverRadius:5,
+      tension:.35,spanGaps:false,borderDash:[4,3],
+    });
+    datasets.push({
+      label:'Jun 25',data:jun25data,
+      borderColor:'#E19AA1',backgroundColor:'transparent',
+      borderWidth:1.5,pointRadius:3,pointHoverRadius:5,
+      tension:.35,spanGaps:false,borderDash:[4,3],
+    });
+  }
+
+  const extraLegend = (isCobChart)
     ? '<span><span class="ldot" style="background:#D06C2D;opacity:.7;"></span>Nov 25</span><span><span class="ldot" style="background:#E19AA1;opacity:.7;"></span>Jun 25</span>'
     : '';
   document.getElementById(legId).innerHTML=
