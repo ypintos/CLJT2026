@@ -141,7 +141,7 @@ body{font-family:'Montserrat','Segoe UI',sans-serif;background:#eef1f7;color:#1a
 .tv .sec-title::before{background:linear-gradient(180deg,#C23543,#e84057);}
 
 /* ── KPI CARDS ── */
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:28px;}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:28px;}
 .kpi-card{
   border-radius:14px;padding:16px 17px;
   border:1.5px solid transparent;
@@ -324,10 +324,8 @@ td.var-neu{color:#1e293b;}
     </div>
   </div>
   <div class="nov-pill">
-  <span class="nov-pill-dot"></span>
-  <span>Datos act al 8/6</span>
-</div>
-    </div>
+    <span class="nov-pill-dot"></span>
+    <span>Datos act al 8/6</span>
   </div>
 </div>
 
@@ -436,7 +434,11 @@ td.var-neu{color:#1e293b;}
       <button class="coll-btn" id="jet-volar-btn" onclick="toggleColl('jet-volar')" style="background:linear-gradient(135deg,#ea580c,#f97316);color:#fff;">🎫 Canjes Volar <span class="arrow" style="color:#fff;">&#8964;</span></button>
       <div class="coll-body" id="jet-volar">
         <div id="jet-volar-kpis" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;"></div>
-        <div class="table-wrap"><table id="jet-volar-table"></table></div>
+        <div class="table-wrap" style="margin-bottom:20px;"><table id="jet-volar-table"></table></div>
+        <div>
+          <div style="font-size:11px;font-weight:700;color:#ea580c;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Tickets por aerolínea</div>
+          <div id="jet-volar-treemap" style="width:100%;height:340px;position:relative;"></div>
+        </div>
       </div>
     </div>
 
@@ -446,8 +448,6 @@ td.var-neu{color:#1e293b;}
     </div>
   </div>
 </div>
-
-<!-- ===== TIENDA ===== -->
 <div id="panel-tv" class="panel tv-bg tv">
   <div class="panel-header">
     <h2>Tienda Viajes</h2>
@@ -499,6 +499,7 @@ td.var-neu{color:#1e293b;}
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <script>
 // ── DÍAS ──────────────────────────────────────────────────────────────────────
 const DAYS=[{l:'Lun',d:'1/6'},{l:'Mar',d:'2/6'},{l:'Mié',d:'3/6'},{l:'Jue',d:'4/6'},{l:'Vie',d:'5/6'},{l:'Sáb',d:'6/6'},{l:'Dom',d:'7/6'},{l:'Lun',d:'8/6'}];
@@ -530,6 +531,22 @@ const HIST_JET={
 const HIST_COB_DIARIA={
   nov25:[421680,535355,657265,514535,479512,53716,47439,400612],
   jun25:[419434,575482,508427,529628,563565,109684,37594,400494]
+};
+
+// ── HISTÓRICOS TIENDA VIAJES ──────────────────────────────────────────────────
+const HIST_TV={
+  jun25:{
+    cob:599422,
+    cobDiaHist:[83812,88762,133203,84372,129251,17708,14019,48295],
+    fichas:306,
+    fichasDia:[47,54,57,38,32,8,13,21],
+  },
+  nov25:{
+    cob:417490,
+    cobDiaHist:[45814,85949,61857,68721,60016,29430,4966,60736],
+    fichas:191,
+    fichasDia:[30,34,39,31,20,16,4,17],
+  },
 };
 
 // ── DATOS CIBER 26 — ACTUALIZAR AQUÍ CADA DÍA ─────────────────────────────────
@@ -569,26 +586,6 @@ const DATA={
     resPaq:  [28,9,9,13,3,3,0,3],
     usersWeb:['3.6K','1.9K','1.3K','915','547','458','509','533'],
   }
-};
-
-// ── HISTÓRICOS TIENDA VIAJES ──────────────────────────────────────────────────
-// Fuente: imagen tabla cobros y fichas Ciber Lunes
-const HIST_TV={
-  jun25:{
-    cob:     607935,
-    cobDia:  [98792,107306,132335,127187,77847,4480,2720,57268],  // Jun26 es el actual; Jun25 usa mismos días
-    cobDiaHist:[83812,88762,133203,84372,129251,17708,14019,48295],
-    fichas:  306,
-    fichasDia:[47,54,57,38,32,8,13,21],
-  },
-  nov25:{
-    cob:     417490,
-    cobDiaHist:[45814,85949,61857,68721,60016,29430,4966,60736],
-    fichas:  191,
-    fichasDia:[30,34,39,31,20,16,4,17],
-  },
-  jun24:{cobDiaHist:[90631,108967,93523,87752,46510,29057,15759,74098]},
-  nov24:{cobDiaHist:[55465,100659,104156,88947,33407,29346,26734,26489]},
 };
 
 // ── HELPERS ───────────────────────────────────────────────────────────────────
@@ -639,6 +636,10 @@ function toggleColl(id){
   const isOpen=body.classList.contains('open');
   body.classList.toggle('open',!isOpen);
   btn.classList.toggle('open',!isOpen);
+  // Re-render treemap when Canjes Volar opens (needs real width)
+  if(id==='jet-volar'&&!isOpen){
+    setTimeout(()=>buildVolarSection(),80);
+  }
 }
 
 // ── KPI CARDS ─────────────────────────────────────────────────────────────────
@@ -675,14 +676,8 @@ function buildKPIs(co){
     const histCobJun25=HIST_COB_DIARIA.jun25.slice(0,nDays).reduce((a,b)=>a+b,0);
     const histCobNov25=HIST_COB_DIARIA.nov25.slice(0,nDays).reduce((a,b)=>a+b,0);
     histCob=varChip(varPct(totCob,histCobJun25),'Jun25')+varChip(varPct(totCob,histCobNov25),'Nov25');
-    histCons='';
-    histOpor='';
-  } else {
-    // TV: comparar cobranza y fichas contra ediciones anteriores (mismos N días)
-    const nDays=d.cob.filter(v=>v!==null).length;
-    const tvCobJun25=HIST_TV.jun25.cobDiaHist.slice(0,nDays).reduce((a,b)=>a+b,0);
-    const tvCobNov25=HIST_TV.nov25.cobDiaHist.slice(0,nDays).reduce((a,b)=>a+b,0);
-    histCob=varChip(varPct(totCob,tvCobJun25),'Jun25')+varChip(varPct(totCob,tvCobNov25),'Nov25');
+    histCons=''; // Sin comparación histórica para consultas preventa
+    histOpor=''; // Sin comparación histórica para oportunidades preventa
   }
 
   let html='';
@@ -714,8 +709,6 @@ function buildKPIs(co){
     const totCup=sum(d.cupones);
     const totSubs=sum(d.subs);
     const totCanjes=sum(d.canjesVHS??[]);
-    const totTick=sum(d.resTicket??[]);
-    const totPaq=sum(d.resPaq??[]);
     const subsPct=pct(totSubs,obj.subs);
     const subsOk=subsPct>=100;
 
@@ -755,34 +748,26 @@ function buildKPIs(co){
         ${varChip(varPct(totSubs,HIST_JET.nov25.subs),'Nov25')}
       </div>
     </div>`;
-  }
 
-  // 6. DETALLE POR CANAL
-  if(co==='jet'){
+    // 6. DETALLE POR CANAL — formato compacto con consultas+opor en cada tarjeta
     const cReal=s=>CANAL[s].cons.reduce((a,b)=>a+(b??0),0);
     const oReal=s=>CANAL[s].opor.reduce((a,b)=>a+(b??0),0);
     const cObj =s=>CANAL[s].objCons.reduce((a,b)=>a+(b??0),0);
     const oObj =s=>CANAL[s].objOpor.reduce((a,b)=>a+(b??0),0);
     const canalDef=[
-      {key:'total',   label:'Total canales',badge:'TOT',color:'#304D85',light:'#e8edf7'},
-      {key:'whatsapp',label:'WhatsApp',     badge:'WA', color:'#16a34a',light:'#dcfce7'},
-      {key:'paqweb',  label:'PAQ WEB',      badge:'WEB',color:'#0284c7',light:'#e0f2fe'},
-      {key:'llamadas',label:'Teléfono',     badge:'TEL',color:'#7c3aed',light:'#ede9fe'},
+      {key:'total',   label:'Total canales', badge:'TOT', color:'#304D85', light:'#e8edf7'},
+      {key:'whatsapp',label:'WhatsApp',       badge:'WA',  color:'#16a34a', light:'#dcfce7'},
+      {key:'paqweb',  label:'PAQ WEB',        badge:'WEB', color:'#0284c7', light:'#e0f2fe'},
+      {key:'llamadas',label:'Teléfono',       badge:'TEL', color:'#7c3aed', light:'#ede9fe'},
     ];
     canalDef.forEach(({key,label,badge,color,light})=>{
       const cr=cReal(key),co2=cObj(key),orv=oReal(key),oo=oObj(key);
       const cPct=co2>0?Math.round(cr/co2*100):null;
       const oPct=oo>0?Math.round(orv/oo*100):null;
-      const miniBar=(real,objV,p)=>p!==null?`
-        <div style="margin-top:5px;">
-          <div style="display:flex;justify-content:space-between;font-size:9px;color:#64748b;margin-bottom:2px;">
-            <span>Obj: ${fmtN(objV)}</span>
-            <span style="color:${p>=100?'#15803d':color};font-weight:700;">${p}%</span>
-          </div>
-          <div style="background:#e2e8f0;border-radius:99px;height:5px;">
-            <div style="background:${color};width:${Math.min(p,100)}%;height:5px;border-radius:99px;"></div>
-          </div>
-        </div>`:'';
+      const miniBar=(p,c)=>p!==null?`
+        <div style="background:#e2e8f0;border-radius:99px;height:4px;margin-top:3px;">
+          <div style="background:${c};width:${Math.min(p,100)}%;height:4px;border-radius:99px;"></div>
+        </div>`:'' ;
       html+=`<div class="kpi-card" style="border-left:4px solid ${color};background:linear-gradient(135deg,#fff 70%,${light});">
         <div class="kpi-top">
           <div class="kpi-label" style="color:${color};">${label}</div>
@@ -790,19 +775,22 @@ function buildKPIs(co){
         </div>
         <div style="display:flex;gap:10px;margin-top:6px;">
           <div style="flex:1;">
-            <div style="font-size:9px;color:#64748b;font-weight:600;text-transform:uppercase;margin-bottom:2px;">Consultas</div>
+            <div style="font-size:9px;color:#64748b;font-weight:600;text-transform:uppercase;margin-bottom:1px;">Consultas</div>
             <div style="font-size:20px;font-weight:800;color:${color};">${fmtN(cr)}</div>
-            ${miniBar(cr,co2,cPct)}
+            <div style="font-size:9px;color:#64748b;">Obj: ${fmtN(co2)} ${cPct!==null?`<strong style="color:${cPct>=100?'#15803d':color};">${cPct}%</strong>`:''}</div>
+            ${miniBar(cPct,color)}
           </div>
           <div style="width:1px;background:#e2e8f0;"></div>
           <div style="flex:1;">
-            <div style="font-size:9px;color:#64748b;font-weight:600;text-transform:uppercase;margin-bottom:2px;">Oportunidades</div>
+            <div style="font-size:9px;color:#64748b;font-weight:600;text-transform:uppercase;margin-bottom:1px;">Oportunidades</div>
             <div style="font-size:20px;font-weight:800;color:${color};">${fmtN(orv)}</div>
-            ${miniBar(orv,oo,oPct)}
+            <div style="font-size:9px;color:#64748b;">Obj: ${fmtN(oo)} ${oPct!==null?`<strong style="color:${oPct>=100?'#15803d':color};">${oPct}%</strong>`:''}</div>
+            ${miniBar(oPct,color)}
           </div>
         </div>
       </div>`;
     });
+
   } else {
     // TV: consultas/oportunidades sin separación
     html+=`<div class="kpi-card ${cls}">
@@ -914,11 +902,32 @@ function buildObjTable(co){
 }
 
 // ── CANJES VOLAR HS ───────────────────────────────────────────────────────────
-// Fuente: tabla oficial — [Lun1/6,Mar2/6,Mié3/6,Jue4/6,Vie5/6,Sáb6/6,Dom7/6,Lun8/6]
 const VOLAR={
   canjes:[75,47,67,23,20,25,39,25],
   cob:   [47156,47587,56681,36303,29614,586,4349,68476],
+  tickets:[79,70,91,66,29,16,48,56],
 };
+const AEROLINEAS=[
+  {n:'LAN CHILE',          d:[28,26,28,24,11,4,13,12], tot:146, color:'#1d3557', rNov25:2.8,   rJun25:1.4},
+  {n:'JETSMART',           d:[21,16,20,8,5,4,4,5],     tot:83,  color:'#1a6b8a', rNov25:144.1, rJun25:23.9},
+  {n:'IBERIA AIRLINES',    d:[9,12,11,16,3,0,8,5],     tot:64,  color:'#2a9d8f', rNov25:137.0, rJun25:52.4},
+  {n:'COPA AIRLINES',      d:[4,1,8,4,2,1,10,15],      tot:45,  color:'#457b9d', rNov25:462.5, rJun25:87.5},
+  {n:'SKY AIRLINE',        d:[7,2,11,9,4,0,8,2],       tot:43,  color:'#8338ec', rNov25:7.5,   rJun25:-32.8},
+  {n:'AEROLINEAS ARG.',    d:[0,2,11,0,0,1,3,5],       tot:22,  color:'#0e7c7b', rNov25:46.7,  rJun25:-12.0},
+  {n:'AIR EUROPA',         d:[9,0,2,1,0,0,1,0],        tot:13,  color:'#f4a261', rNov25:160.0, rJun25:550.0},
+  {n:'GOL TRANSPORTES',    d:[2,5,0,0,0,2,1,2],        tot:12,  color:'#ef476f', rNov25:0.0,   rJun25:-70.0},
+  {n:'DELTA AIRLINES',     d:[0,0,2,3,0,2,0,3],        tot:10,  color:'#118ab2', rNov25:null,  rJun25:null},
+  {n:'AMERICAN AIRLINES',  d:[4,3,0,0,1,1,0,1],        tot:10,  color:'#073b4c', rNov25:null,  rJun25:null},
+  {n:'AEROSUR',            d:[0,1,0,0,0,0,0,5],        tot:6,   color:'#b5838d', rNov25:null,  rJun25:null},
+  {n:'AVIANCA',            d:[1,0,0,1,3,0,0,0],        tot:5,   color:'#6d6875', rNov25:null,  rJun25:null},
+  {n:'PARANAIR',           d:[0,1,0,0,0,1,0,0],        tot:2,   color:'#c77dff', rNov25:null,  rJun25:null},
+  {n:'LUFTHANSA',          d:[0,0,0,2,0,0,0,0],        tot:2,   color:'#48cae4', rNov25:null,  rJun25:null},
+  {n:'AZUL LINHAS AEREAS', d:[0,2,0,0,0,0,0,0],        tot:2,   color:'#0096c7', rNov25:null,  rJun25:null},
+  {n:'AEROMEXICO',         d:[0,0,0,0,0,0,0,1],        tot:1,   color:'#40916c', rNov25:null,  rJun25:null},
+];
+const TOTAL_TICKETS=455;
+const TICKETS_R_NOV25=+54.2;
+const TICKETS_R_JUN25=+2.2;
 
 function buildVolarSection(){
   const totCanjes=VOLAR.canjes.reduce((a,b)=>a+b,0);
@@ -926,47 +935,183 @@ function buildVolarSection(){
   const totCobJet=DATA.jet.cob.reduce((a,b)=>a+(b??0),0);
   const pct2=totCobJet>0?((totCobVolar/totCobJet)*100).toFixed(1):'—';
 
+  // KPIs
   const kpiEl=document.getElementById('jet-volar-kpis');
   if(kpiEl){
     kpiEl.innerHTML=`
-      <div style="background:linear-gradient(135deg,#ea580c,#f97316);color:#fff;border-radius:12px;padding:14px 20px;min-width:140px;text-align:center;flex:1;">
+      <div style="background:linear-gradient(135deg,#ea580c,#f97316);color:#fff;border-radius:12px;padding:14px 20px;min-width:130px;text-align:center;flex:1;">
         <div style="font-size:10px;opacity:.85;margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Total Canjes</div>
         <div style="font-size:26px;font-weight:800;">${totCanjes}</div>
         <div style="font-size:9px;opacity:.8;">unidades semana</div>
       </div>
-      <div style="background:linear-gradient(135deg,#c2410c,#ea580c);color:#fff;border-radius:12px;padding:14px 20px;min-width:140px;text-align:center;flex:1;">
+      <div style="background:linear-gradient(135deg,#c2410c,#ea580c);color:#fff;border-radius:12px;padding:14px 20px;min-width:130px;text-align:center;flex:1;">
         <div style="font-size:10px;opacity:.85;margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Cobranza Volar</div>
         <div style="font-size:26px;font-weight:800;">$${totCobVolar.toLocaleString('es-AR')}</div>
         <div style="font-size:9px;opacity:.8;">USD acumulado</div>
       </div>
-      <div style="background:linear-gradient(135deg,#9a3412,#c2410c);color:#fff;border-radius:12px;padding:14px 20px;min-width:140px;text-align:center;flex:1;">
+      <div style="background:linear-gradient(135deg,#9a3412,#c2410c);color:#fff;border-radius:12px;padding:14px 20px;min-width:130px;text-align:center;flex:1;">
         <div style="font-size:10px;opacity:.85;margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">% del total Ciber</div>
         <div style="font-size:26px;font-weight:800;">${pct2}%</div>
         <div style="font-size:9px;opacity:.8;">sobre cobranza Jetmar</div>
+      </div>
+      <div style="background:linear-gradient(135deg,#7c2d12,#9a3412);color:#fff;border-radius:12px;padding:14px 20px;min-width:130px;text-align:center;flex:1;">
+        <div style="font-size:10px;opacity:.85;margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Cantidad de Tickets</div>
+        <div style="font-size:26px;font-weight:800;">${TOTAL_TICKETS}</div>
+        <div style="display:flex;gap:6px;justify-content:center;margin-top:6px;flex-wrap:wrap;">
+          <span style="background:rgba(255,255,255,.2);border-radius:99px;padding:2px 8px;font-size:9px;font-weight:700;">Nov25 +${TICKETS_R_NOV25}%</span>
+          <span style="background:rgba(255,255,255,.2);border-radius:99px;padding:2px 8px;font-size:9px;font-weight:700;">Jun25 +${TICKETS_R_JUN25}%</span>
+        </div>
       </div>`;
   }
 
+  // Tabla canjes/cobranza
   const el=document.getElementById('jet-volar-table');
-  if(!el)return;
-  const head=`<thead><tr>
-    <th style="background:#ea580c;color:#fff;">Canjes Volar HS</th>
-    ${DAYS.map(dy=>`<th>${dy.l}<br><span style="font-weight:500;">${dy.d}</span></th>`).join('')}
-    <th>Total</th>
-  </tr></thead>`;
-  const canjesCells=DAYS.map((_,i)=>`<td>${fmtN(VOLAR.canjes[i])}</td>`).join('');
-  const cobCells=DAYS.map((_,i)=>`<td>$${fmtN(VOLAR.cob[i])}</td>`).join('');
-  const pctCells=DAYS.map((_,i)=>{
-    const jetDay=DATA.jet.cob[i];
-    if(!jetDay||!VOLAR.cob[i])return`<td>—</td>`;
-    return`<td>${((VOLAR.cob[i]/jetDay)*100).toFixed(1)}%</td>`;
-  }).join('');
-  const totCobVolarFmt='$'+totCobVolar.toLocaleString('es-AR');
-  const body=`<tbody>
-    <tr><td><strong>Canjes</strong></td>${canjesCells}<td class="tot">${totCanjes}</td></tr>
-    <tr><td><strong>Cobranza USD</strong></td>${cobCells}<td class="tot">${totCobVolarFmt}</td></tr>
-    <tr><td style="color:#6b7280;font-style:italic;">% del total cobranza</td>${pctCells}<td style="color:#ea580c;font-weight:700;">${pct2}%</td></tr>
-  </tbody>`;
-  el.innerHTML=head+body;
+  if(el){
+    const head=`<thead><tr>
+      <th style="background:#ea580c;color:#fff;">Canjes Volar HS</th>
+      ${DAYS.map(dy=>`<th>${dy.l}<br><span style="font-weight:500;">${dy.d}</span></th>`).join('')}
+      <th>Total</th>
+    </tr></thead>`;
+    const canjesCells=DAYS.map((_,i)=>`<td>${fmtN(VOLAR.canjes[i])}</td>`).join('');
+    const ticketCells=DAYS.map((_,i)=>`<td>${fmtN(VOLAR.tickets[i])}</td>`).join('');
+    const cobCells=DAYS.map((_,i)=>`<td>$${fmtN(VOLAR.cob[i])}</td>`).join('');
+    const pctCells=DAYS.map((_,i)=>{
+      const jetDay=DATA.jet.cob[i];
+      if(!jetDay||!VOLAR.cob[i])return`<td>—</td>`;
+      return`<td>${((VOLAR.cob[i]/jetDay)*100).toFixed(1)}%</td>`;
+    }).join('');
+    const totTickets=VOLAR.tickets.reduce((a,b)=>a+b,0);
+    el.innerHTML=`${head}<tbody>
+      <tr><td><strong>Canjes</strong></td>${canjesCells}<td class="tot">${totCanjes}</td></tr>
+      <tr><td><strong>Tickets</strong></td>${ticketCells}<td class="tot">${totTickets}</td></tr>
+      <tr><td><strong>Cobranza USD</strong></td>${cobCells}<td class="tot">$${totCobVolar.toLocaleString('es-AR')}</td></tr>
+      <tr><td style="color:#6b7280;font-style:italic;">% del total cobranza</td>${pctCells}<td style="color:#ea580c;font-weight:700;">${pct2}%</td></tr>
+    </tbody>`;
+  }
+
+  // ── Treemap SVG puro — aerolíneas por total de tickets ──────────────────────
+  const tmEl=document.getElementById('jet-volar-treemap');
+  if(!tmEl)return;
+  tmEl.innerHTML='';
+
+  const W=tmEl.offsetWidth||640, H=340;
+  const aeroActivas=[...AEROLINEAS].filter(a=>a.tot>0).sort((a,b)=>b.tot-a.tot);
+  const treeColors=['#1d3557','#1a6b8a','#2a9d8f','#48cae4','#0096c7','#023e8a','#0077b6','#0e7c7b','#3a7ca5','#16697a','#4ecdc4','#457b9d','#1b4332','#2d6a4f','#40916c','#52b788'];
+
+  // Squarified treemap layout
+  function squarify(items, x, y, w, h){
+    if(!items.length)return[];
+    const total=items.reduce((s,a)=>s+a.tot,0);
+    const rects=[];
+    let rx=x,ry=y,rw=w,rh=h;
+    let rem=[...items];
+    while(rem.length){
+      const remSum=rem.reduce((s,a)=>s+a.tot,0);
+      const horiz=rw>=rh;
+      let row=[],rowSum=0;
+      for(let i=0;i<rem.length;i++){
+        const test=[...row,rem[i]];
+        const testSum=rowSum+rem[i].tot;
+        const side=horiz?rw:rh;
+        const other=horiz?rh:rw;
+        const rowLen=side*(testSum/remSum);
+        const worstAR=Math.max(...test.map(it=>{
+          const s=other*(it.tot/testSum);
+          return Math.max(rowLen/s,s/rowLen);
+        }));
+        if(row.length&&worstAR>Math.max(...row.map(it=>{
+          const s=other*(it.tot/rowSum);
+          const rl=side*(rowSum/remSum);
+          return Math.max(rl/s,s/rl);
+        }))){break;}
+        row.push(rem[i]);rowSum+=rem[i].tot;
+      }
+      const rowFrac=rowSum/remSum;
+      if(horiz){
+        const cw=rw*rowFrac;
+        let cy=ry;
+        row.forEach(it=>{
+          const ch=rh*(it.tot/rowSum);
+          rects.push({it,x:rx,y:cy,w:cw,h:ch});
+          cy+=ch;
+        });
+        rx+=cw;rw-=cw;
+      } else {
+        const ch=rh*rowFrac;
+        let cx=rx;
+        row.forEach(it=>{
+          const cw2=rw*(it.tot/rowSum);
+          rects.push({it,x:cx,y:ry,w:cw2,h:ch});
+          cx+=cw2;
+        });
+        ry+=ch;rh-=ch;
+      }
+      rem=rem.filter(a=>!row.includes(a));
+    }
+    return rects;
+  }
+
+  const rects=squarify(aeroActivas,2,2,W-4,H-4);
+  const NS='http://www.w3.org/2000/svg';
+  const svg=document.createElementNS(NS,'svg');
+  svg.setAttribute('width','100%');svg.setAttribute('height',H);
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  svg.style.cssText='border-radius:10px;overflow:hidden;display:block;';
+
+  // Tooltip
+  const tip=document.createElement('div');
+  tip.style.cssText='position:fixed;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:12px;color:#1e293b;box-shadow:0 4px 20px rgba(0,0,0,.15);pointer-events:none;display:none;z-index:9999;line-height:1.7;min-width:170px;';
+  document.body.appendChild(tip);
+
+  rects.forEach(({it,x,y,w,h},idx)=>{
+    const pad=3;
+    const g=document.createElementNS(NS,'g');g.style.cursor='pointer';
+
+    const rect=document.createElementNS(NS,'rect');
+    rect.setAttribute('x',x+pad);rect.setAttribute('y',y+pad);
+    rect.setAttribute('width',Math.max(0,w-pad*2));rect.setAttribute('height',Math.max(0,h-pad*2));
+    rect.setAttribute('rx','5');
+    rect.setAttribute('fill',treeColors[idx%treeColors.length]);
+    rect.setAttribute('stroke','#fff');rect.setAttribute('stroke-width','2');
+    rect.style.transition='opacity .15s';
+
+    // Text: name + count + variations
+    const cw=w-pad*2, ch=h-pad*2;
+    if(cw>30&&ch>22){
+      const fo=document.createElementNS(NS,'foreignObject');
+      fo.setAttribute('x',x+pad+5);fo.setAttribute('y',y+pad+5);
+      fo.setAttribute('width',Math.max(0,cw-10));fo.setAttribute('height',Math.max(0,ch-10));
+      fo.style.pointerEvents='none';
+      const div=document.createElement('div');
+      const fs=cw>100&&ch>60?11:9;
+      const hasVar=it.rNov25!==null||it.rJun25!==null;
+      const fmtVar=v=>v===null?'':`${v>0?'+':''}${v}%`;
+      const varHtml=hasVar&&ch>55?`<div style="margin-top:3px;display:flex;gap:4px;flex-wrap:wrap;">
+        ${it.rNov25!==null?`<span style="background:rgba(0,0,0,.25);border-radius:3px;padding:1px 4px;font-size:${fs-1}px;font-weight:700;white-space:nowrap;">${fmtVar(it.rNov25)} Nov</span>`:''}
+        ${it.rJun25!==null?`<span style="background:rgba(0,0,0,.25);border-radius:3px;padding:1px 4px;font-size:${fs-1}px;font-weight:700;white-space:nowrap;">${fmtVar(it.rJun25)} Jun</span>`:''}
+      </div>`:'';
+      div.style.cssText=`color:#fff;font-size:${fs}px;font-weight:700;font-family:Montserrat,sans-serif;line-height:1.3;overflow:hidden;height:100%;user-select:none;`;
+      div.innerHTML=`${it.n}${ch>36?`<br><span style="font-size:${fs+2}px;font-weight:800;">${it.tot}</span>`:''}${varHtml}`;
+      fo.appendChild(div);
+      g.appendChild(fo);
+    }
+
+    // Hover
+    g.addEventListener('mouseenter',()=>rect.setAttribute('opacity','.8'));
+    g.addEventListener('mouseleave',()=>{rect.setAttribute('opacity','1');tip.style.display='none';});
+    g.addEventListener('mousemove',e=>{
+      tip.style.display='block';
+      tip.style.left=(e.clientX+16)+'px';tip.style.top=(e.clientY-12)+'px';
+      const pct=((it.tot/aeroActivas.reduce((s,a)=>s+a.tot,0))*100).toFixed(1);
+      const nov=it.rNov25!==null?`<br><span style="font-size:11px;">r_Nov25: <strong style="color:${it.rNov25>=0?'#15803d':'#dc2626'}">${it.rNov25>0?'+':''}${it.rNov25}%</strong></span>`:'';
+      const jun=it.rJun25!==null?`<br><span style="font-size:11px;">r_Jun25: <strong style="color:${it.rJun25>=0?'#15803d':'#dc2626'}">${it.rJun25>0?'+':''}${it.rJun25}%</strong></span>`:'';
+      tip.innerHTML=`<strong style="color:#1d3557;">${it.n}</strong><br>Tickets: <strong>${it.tot}</strong><br><span style="color:#64748b;font-size:11px;">${pct}% del total</span>${nov}${jun}`;
+    });
+
+    g.insertBefore(rect,g.firstChild);
+    svg.appendChild(g);
+  });
+  tmEl.appendChild(svg);
 }
 
 // ── TABLA DETALLE ─────────────────────────────────────────────────────────────
@@ -1103,42 +1248,26 @@ function buildChart(co,canvasId,legId,keys,labels){
   // Add historical cobranza lines for jet c1 chart — only where current data exists
   if(co==='jet' && isCobChart){
     const currentCob=DATA.jet.cob;
+    // Filter: only show hist value for days where current data is loaded
     const nov25data=HIST_COB_DIARIA.nov25.map((v,i)=>currentCob[i]!==null?v:null);
     const jun25data=HIST_COB_DIARIA.jun25.map((v,i)=>currentCob[i]!==null?v:null);
     datasets.push({
-      label:'Nov 25',data:nov25data,
+      label:'Nov 25',
+      data:nov25data,
       borderColor:'#D06C2D',backgroundColor:'transparent',
       borderWidth:1.5,pointRadius:3,pointHoverRadius:5,
       tension:.35,spanGaps:false,borderDash:[4,3],
     });
     datasets.push({
-      label:'Jun 25',data:jun25data,
+      label:'Jun 25',
+      data:jun25data,
       borderColor:'#E19AA1',backgroundColor:'transparent',
       borderWidth:1.5,pointRadius:3,pointHoverRadius:5,
       tension:.35,spanGaps:false,borderDash:[4,3],
     });
   }
 
-  // Add historical cobranza lines for tv c1 chart
-  if(co==='tv' && isCobChart){
-    const currentCob=DATA.tv.cob;
-    const nov25data=HIST_TV.nov25.cobDiaHist.map((v,i)=>currentCob[i]!==null?v:null);
-    const jun25data=HIST_TV.jun25.cobDiaHist.map((v,i)=>currentCob[i]!==null?v:null);
-    datasets.push({
-      label:'Nov 25',data:nov25data,
-      borderColor:'#D06C2D',backgroundColor:'transparent',
-      borderWidth:1.5,pointRadius:3,pointHoverRadius:5,
-      tension:.35,spanGaps:false,borderDash:[4,3],
-    });
-    datasets.push({
-      label:'Jun 25',data:jun25data,
-      borderColor:'#E19AA1',backgroundColor:'transparent',
-      borderWidth:1.5,pointRadius:3,pointHoverRadius:5,
-      tension:.35,spanGaps:false,borderDash:[4,3],
-    });
-  }
-
-  const extraLegend = (isCobChart)
+  const extraLegend = (co==='jet'&&isCobChart)
     ? '<span><span class="ldot" style="background:#D06C2D;opacity:.7;"></span>Nov 25</span><span><span class="ldot" style="background:#E19AA1;opacity:.7;"></span>Jun 25</span>'
     : '';
   document.getElementById(legId).innerHTML=
